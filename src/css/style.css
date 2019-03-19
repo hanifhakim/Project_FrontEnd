@@ -1,0 +1,31 @@
+div .carousel-item img{
+    max-height: 200px;
+    min-height: 200px;
+    opacity: 0.8;
+    background-size: cover;
+    
+    
+}
+div .carousel-item p{
+    color: rgb(38, 41, 38);
+}
+
+@media (min-width: 768px) {
+    /* div .carousel-item img{
+        max-height: 500px;
+        opacity: 0.8;
+        background-size: cover;
+        
+    } */
+.tembakFlex{
+    grid-row: auto !important
+}
+}
+
+div .gambarJumbo {
+    max-width: 100%;
+    border-radius: 5px
+}
+.jumbotron{
+    margin-top: 50px
+}
