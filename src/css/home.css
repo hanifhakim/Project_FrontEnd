@@ -1,0 +1,15 @@
+div .gambarJumbo {
+    max-width: 100%;
+    border-radius: 5px
+}
+.jumbotron{
+    /* margin-top: 50px; */
+    height: 450px;
+    background-image: url("http://4.bp.blogspot.com/-ur1BBZqUmmQ/U97X5tQmjMI/AAAAAAAABSI/Wbz00BaRgVM/s1600/BudaiFishMkt1.JPG");
+    background-position-x: center;
+    background-size: 100%;
+}
+.jumbotron h1, .jumbotron p{
+    color: aliceblue;
+   
+}

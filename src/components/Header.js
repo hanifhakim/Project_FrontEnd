@@ -1,162 +1,199 @@
 import React, { Component } from 'react'
 
 import { connect } from "react-redux";
-import { logoutUser } from '../actions'
-// import { Link } from 'react-router-dom'
-import {
-    Collapse,
-    Navbar,
-    NavbarToggler,
-    NavbarBrand,
-    Nav,
-    NavItem,
-    NavLink,
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem } from 'reactstrap';
-// import { connect } from 'http2';
-  
+import { onLogoutUser } from '../actions/users'
+import { Link } from 'react-router-dom'
+import Cookies from 'universal-cookie'
+import '../css/header.css'
+
+const cookie = new Cookies()
+
 class Header extends Component {
-    constructor(props) {
-        super(props);
+  render() {
+    // console.log(cookie.get('roleLogin'));
+    if(cookie.get('idLogin') !== undefined && cookie.get('roleLogin') === 'user'){
+      return (
+        <div>
+          <nav className="navbar navbar-expand-sm bg-info  navbar-dark sticky-top" id="main-nav">
+            <div className="container">
+              <Link to="/" className="navbar-brand">NakamIkan <i className="fas fa-fish"></i></Link>
+              <button className="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                <span className="navbar-toggler-icon "></span>
+              </button>
+              <div className="collapse navbar-collapse" id="navbarCollapse">
+                <ul className="navbar-nav ml-auto">
+                  <li className="nav-item">
+                    <Link to="/" className="nav-link"><i className="fas fa-home"></i></Link>
+                  </li>
+                  <li className="nav-item dropdown">
+                    <a className="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink"
+                      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Shop
+                  </a>
+                    <ul className="dropdown-menu dropdownParent" aria-labelledby="navbarDropdownMenuLink">
+                      <div className="dropdown-header">Products</div>
+                      <li className="dropdown-submenu"><a className="dropdown-item dropdown-toggle" href="http://google.com">SeaFood</a>
+                        <ul className="dropdown-menu dropdownChild">
+                          <li><a className="dropdown-item" href="#home">Pelagic Fish</a></li>
+                          <li><a className="dropdown-item" href="#home">Demersal Fish</a></li>
+                        </ul>
+                      </li>
+                      <li className="dropdown-submenu"><a className="dropdown-item dropdown-toggle" href="http://google.com">FreshWater</a>
+                        <ul className="dropdown-menu dropdownChild">
+                          <li><a className="dropdown-item" href="#home">Aquaculture</a></li>
+                          <li><a className="dropdown-item" href="#home">Submenu0</a></li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </li>
+                  <li className="nav-item dropdown">
+                    <a className="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink"
+                      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      My Account
+                  </a>
+                    <ul className="dropdown-menu dropdownParent" aria-labelledby="navbarDropdownMenuLink">
+                      <li className="dropdown-submenu ">
+                        <Link to="/manageaccount/info" className="dropdown-item text-dark">Manage Account</Link>
+                      </li>
+                      <li className="dropdown-submenu">
+                      {/* <Link to="/" className="dropdown-item text-dark"> */}
+                        <button
+                          onClick={() => {this.props.onLogoutUser()}}
+                          className="dropdown-item text-dark">Logout
+                      </button>
+                      {/* </Link> */}
+                      </li>
+                    </ul>
+                  </li>
+                  <li className="nav-item">
+                  <Link to="/register" className="nav-link">Cart <i className="fas fa-shopping-cart"></i></Link>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+        </div>
+      );
+    } else if (cookie.get('roleLogin') === 'admin'){
+    return (
+      <div>
+        <nav className="navbar navbar-expand-sm bg-info  navbar-dark sticky-top" id="main-nav">
+            <div className="container">
+              <Link to="/" className="navbar-brand">NakamIkan <i className="fas fa-fish"></i></Link>
+              <button className="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                <span className="navbar-toggler-icon "></span>
+              </button>
+              <div className="collapse navbar-collapse" id="navbarCollapse">
+                <ul className="navbar-nav ml-auto">
+                  <li className="nav-item">
+                    <Link to="/" className="nav-link"><i className="fas fa-home"></i></Link>
+                  </li>
+                  <li className="nav-item dropdown">
+                    <a className="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink"
+                      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Shop
+                  </a>
+                    <ul className="dropdown-menu dropdownParent" aria-labelledby="navbarDropdownMenuLink">
+                      <div className="dropdown-header">Products</div>
+                      <li className="dropdown-submenu"><a className="dropdown-item dropdown-toggle" href="http://google.com">SeaFood</a>
+                        <ul className="dropdown-menu dropdownChild">
+                          <li><a className="dropdown-item" href="#home">Pelagic Fish</a></li>
+                          <li><a className="dropdown-item" href="#home">Demersal Fish</a></li>
+                        </ul>
+                      </li>
+                      <li className="dropdown-submenu"><a className="dropdown-item dropdown-toggle" href="http://google.com">FreshWater</a>
+                        <ul className="dropdown-menu dropdownChild">
+                          <li><a className="dropdown-item" href="#home">Aquaculture</a></li>
+                          <li><a className="dropdown-item" href="#home">Submenu0</a></li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </li>
+                  <li className="nav-item dropdown">
+                    <a className="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink"
+                      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      My Account
+                  </a>
+                    <ul className="dropdown-menu dropdownParent" aria-labelledby="navbarDropdownMenuLink">
+                      <li className="dropdown-submenu ">
+                        <Link to="/manageproduct" className="dropdown-item text-dark">Manage Products</Link>
+                      </li>
+                      <li className="dropdown-submenu">
+                      {/* <Link to="/" className="dropdown-item text-dark"> */}
+                        <button
+                          onClick={() => {this.props.onLogoutUser()}}
+                          className="dropdown-item text-dark">Logout
+                      </button>
+                      {/* </Link> */}
+                      </li>
+                    </ul>
+                  </li>
+                  <li className="nav-item">
+                  <Link to="/register" className="nav-link">Cart <i className="fas fa-shopping-cart"></i></Link>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+      </div>
+    )
+  }
+     return (
+      <nav className="navbar navbar-expand-sm bg-info  navbar-dark sticky-top" id="main-nav">
+        <div className="container">
+          <Link to="/" className="navbar-brand">NakamIkan <i className="fas fa-fish"></i></Link>
+          <button className="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+            <span className="navbar-toggler-icon "></span>
+          </button>
+          <div className="collapse navbar-collapse" id="navbarCollapse">
+            <ul className="navbar-nav ml-auto">
+              <li className="nav-item">
+                <Link to="/" className="nav-link"><i className="fas fa-home"></i></Link>
+              </li>
+              <li className="nav-item">
+              <Link to="/register" className="nav-link">Login/Register</Link>
+              </li>
+              <li className="nav-item dropdown">
+                <a className="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Shop
+                </a>
+                <ul className="dropdown-menu dropdownParent" aria-labelledby="navbarDropdownMenuLink">
+                <div className="dropdown-header">Products</div>
+                  <li className="dropdown-submenu"><a className="dropdown-item dropdown-toggle" href="http://google.com">SeaFood</a>
+                    <ul className="dropdown-menu dropdownChild">
+                      <li><a className="dropdown-item" href="#home">Pelagic Fish</a></li>
+                      <li><a className="dropdown-item" href="#home">Demersal Fish</a></li>
+                    </ul>
+                  </li>
+                  <li className="dropdown-submenu"><a className="dropdown-item dropdown-toggle" href="http://google.com">FreshWater</a>
+                    <ul className="dropdown-menu dropdownChild">
+                      <li><a className="dropdown-item" href="#home">Aquaculture</a></li>
+                      <li><a className="dropdown-item" href="#home">Submenu0</a></li>
+                    </ul>
+                  </li>
+                  <li className="dropdown-submenu"><Link to="/product" className="dropdown-item">Shop All</Link>
 
-        this.toggle = this.toggle.bind(this);
-        this.state = {
-            isOpen: false
-        };
-    }
-    toggle() {
-        this.setState({
-            isOpen: !this.state.isOpen
-        });
-    }
-    
-    render() {
-        // const {username} = this.props.user
-        if(this.props.user !==""){
-            console.log(this.props.user);
-            
-            return (
-                <div>
-                    <Navbar className="navbar fixed-top" color="info" light expand="md">
-                        <NavbarBrand href="/">NakamIkan <i className="fas fa-fish"></i></NavbarBrand>
-                        <NavbarToggler onClick={this.toggle} />
-                        <Collapse isOpen={this.state.isOpen} navbar>
-                            <Nav className="ml-auto" navbar>
-                                <NavItem>
-                                    <NavLink href="/components/"><i className="fas fa-home"></i></NavLink>
-                                </NavItem>
-                                <NavItem>
-                                    <NavLink href="#">How To Buy?</NavLink>
-                                </NavItem>
-                                <NavItem>
-                                    <NavLink href="/components/"><i class="fas fa-shopping-cart"></i></NavLink>
-                                </NavItem>
-                                <UncontrolledDropdown nav inNavbar>
-                                    <DropdownToggle nav caret className="text-capitalize" >
-                                        Halo {this.props.user}
-                      </DropdownToggle>
-                                    <DropdownMenu right>
-                                        <DropdownItem>
-                                            Manage Product
-                        </DropdownItem>
-                                        <DropdownItem>
-                                            Admin
-                        </DropdownItem>
-                                        <DropdownItem divider />
-                                        <DropdownItem onClick={this.props.logoutUser}>
-                                            Logout 
-                        </DropdownItem>
-                                    </DropdownMenu>
-                                </UncontrolledDropdown>
-                            </Nav>
-                        </Collapse>
-                    </Navbar>
-                </div>
-            );
-        } else {
-            return (
-                <div>
-                    <Navbar className="navbar fixed-top" color="light" light expand="md">
-                        <NavbarBrand href="/">NakamIkan <i className="fas fa-fish"></i></NavbarBrand>
-                        <NavbarToggler onClick={this.toggle} />
-                        <Collapse isOpen={this.state.isOpen} navbar>
-                            <Nav className="ml-auto" navbar>
-                                <NavItem>
-                                    <NavLink href="/components/"><i className="fas fa-home"></i></NavLink>
-                                </NavItem>
-                                <NavItem>
-                                    <NavLink href="https://github.com/reactstrap/reactstrap">How To Buy?</NavLink>
-                                </NavItem>
-                                <NavItem>
-                                    <NavLink href="/components/"><i class="fas fa-shopping-cart"></i></NavLink>
-                                </NavItem>
-                                <UncontrolledDropdown nav inNavbar>
-                                    <DropdownToggle nav caret>
-                                        Products
-                      </DropdownToggle>
-                                    <DropdownMenu right>
-                                        <DropdownItem>
-                                            Ikan Laut
-                        </DropdownItem>
-                                        <DropdownItem>
-                                            Ikan Air Tawar
-                        </DropdownItem>
-                                        <DropdownItem>
-                                            Frozen Food
-                        </DropdownItem>
-                                    </DropdownMenu>
-                                </UncontrolledDropdown>
-                            </Nav>
-                        </Collapse>
-                    </Navbar>
-                </div>
-            );
-        }
-        
-    }
+                  </li>
+                </ul>
+              </li>
+              <li className="nav-item">
+              <Link to="/cart" className="nav-link">Cart <i className="fas fa-shopping-cart"></i></Link>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    );
+  
+  }
 }
+  
 
 
-// class Header extends Component {
 
-// render(){
-// return(
-//     <div>
-
-//         <nav className="navbar navbar-expand-sm bg-info  navbar-dark sticky-top" id="main-nav">
-//             <div className="container">
-//                 <a href="index.html" className="navbar-brand">NakamIkan <i className="fas fa-fish"></i></a>
-//                 <button className="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-//                     <span className="navbar-toggler-icon "></span>
-//                 </button>
-//                 <div className="collapse navbar-collapse" id="navbarCollapse">
-//                     <ul className="navbar-nav ml-auto">
-//                         <li className="nav-item">
-//                             <a href="#home" className="nav-link">Home</a>
-//                         </li>
-//                         <li className="nav-item">
-//                             <a href="#produk" className="nav-link">Produk</a>
-//                         </li>
-//                         <li className="nav-item">
-//                             <a href="#home" className="nav-link">Cara Belanja</a>
-//                         </li>
-//                         <li className="nav-item">
-//                             <input type="text" placeholder="Cari" className="btn btn-dark"></input>
-//                         </li>
-//                     </ul>
-//                 </div>
-//             </div>
-//         </nav>
-
-
-//     </div>
-// )
-// }
-// }
 const mapStateToProps = (state) => {
-    return {user: state.auth.username}
+    return { user: state.auth.username }
 }
 
-export default connect (mapStateToProps, {logoutUser})(Header)
+export default connect(mapStateToProps, { onLogoutUser })(Header)
+ 

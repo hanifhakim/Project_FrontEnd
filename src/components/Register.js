@@ -1,58 +1,153 @@
 import React, { Component } from "react";
 
-import {onRegistClick} from "../actions"
+import {onRegistClick, onLoggedIn} from "../actions/users"
+import { Redirect } from "react-router-dom";
 import {connect} from "react-redux"
+import Cookies from 'universal-cookie'
+
+const cookie = new Cookies()
 
 class Register extends Component{
 
-    onRegistertClick = () => {
-        const user = this.username.value
-        const email = this.email.value
-        const password = this.password.value
-
-        this.props.onRegistClick(user, email, password)
-
+    onRegistClick = () => {
+        const user = this.usernameRegist.value
+        const first_name = this.first_name.value
+        const last_name = this.last_name.value
+        const email = this.emailRegist.value
+        const password = this.passwordRegist.value
+        console.log(user);
+        console.log(email);
+        console.log(password);
+        this.props.onRegistClick(user, first_name, last_name, email, password)
        
     }
+    onLoginClick = () =>{
+            const user = this.username.value
+            const pass = this.password.value
+            console.log(user);
+            console.log(pass);
+        this.props.onLoggedIn(user, pass)
+
+    }
+    // errorLogin = () => {
+    //     if(this.props.user.errorLogin !== ""){
+    //         this.username.value = ""
+    //         this.password.value = ""
+    //         return (
+    //             <div className="alert alert-danger mt-2" role="alert">
+    //                 {this.props.user.errorLogin}
+    //             </div>
+    //           )
+    //     } else {
+    //           return null
+    //     }
+    // }
+
+    // onErrorRegist = () => {
+    //     if(this.props.user.errorRegist !== ""){
+    //         this.usernameRegist.value = ""
+    //         this.emailRegist.value = ""
+    //         this.passwordRegist.value = ""
+    //         return (
+    //             <div className="alert alert-danger mt-2" role="alert">
+    //                 {this.props.user.errorRegist}
+    //             </div>
+    //           )
+    //     } else if (this.props.user.errorRegist === "" && this.props.user.successRegist !== ""){
+    //     this.usernameRegist.value = ""
+    //     this.emailRegist.value = ""
+    //     this.passwordRegist.value = ""
+    //         return (
+    //             <div className="alert alert-success mt-2" role="alert">
+    //                 {this.props.user.successRegist}
+    //             </div>
+    //           )
+    //     } else {
+    //         return
+    //     }
+    // }
+
 
     render() {
-        return (
-            <div>
-                <div>
-                    <div className="mt-5 row">
-                        <div className="col-sm-3 mx-auto card bg-info">
-                            <div className="card-body">
-                                <div className="border-bottom border-secondary card-title">
-                                    <h1 className="display-3 text-white">Register</h1>
+        if(cookie.get('idLogin') === undefined){
+            return (
+                <div className="container">
+                    <div className="row">
+                        <div className="col-sm-4 mt-5 border border-info p-5">
+                            <form>
+                                <h2 className="display-5">Sign in</h2>
+                                <div className="form-group">
+                                    <label>Username</label>
+                                    <input type="text" ref={input => { this.username = input; }}
+                                        className="form-control" placeholder="type your username" />
                                 </div>
-                                <div className="card-title mt-1 text-white">
-                                    <h4>Username</h4>
+                                <div className="form-group">
+                                    <label>Password</label>
+                                    <input type="password" ref={input => { this.password = input; }}
+                                        className="form-control" placeholder="type your password" />
                                 </div>
-                                <form className="input-group">
-                                    <input ref={input => { this.username = input }} className="form-control" type="text" />
-                                </form>
-                                <div className="card-title mt-1 text-white">
-                                    <h4>Email</h4>
-                                </div>
-                                <form className="input-group">
-                                    <input ref={input => { this.email = input }} className="form-control" type="email" />
-                                </form>
-                                <div className="card-title mt-1 text-white">
-                                    <h4>Password</h4>
-                                </div>
-                                <form className="input-group">
-                                    <input ref={input => { this.password = input }} className="form-control" type="password" />
-                                </form>
-                                <button className="btn btn-light btn-block mt-5"
-                                    onClick={this.onRegistertClick}>Register</button>
-                            </div>
+                            </form>
+                            {/* {this.errorLogin()} */}
+                            <button onClick={()=>{this.onLoginClick()}}
+                                className="btn btn-dark btn-block">Submit</button>
                         </div>
-
+                        <div className="col-sm-6 mt-5 border border-info p-5 ml-auto">
+                            <form>
+                                <h2 className="display-5 mb-5">Create account</h2>
+                                <div className="text-center">
+                                    <div className="d-inline-block">
+                                        <i className="fas fa-shipping-fast"></i><p className="lead mx-2">Fast-shipping</p>
+                                    </div>
+                                    <div className="d-inline-block">
+                                        <i className="fas fa-hand-holding-usd"></i><p className="lead mx-2">Save money</p>
+                                    </div>
+                                </div>
+                                <div className="form-group">
+                                    <label>Username</label>
+                                    <input type="text"
+                                        ref={input => { this.usernameRegist = input; }}
+                                        className="form-control" placeholder="type your username" />
+                                </div>
+                                <div className="form-group row">
+                                    <div className="col-6">
+                                        <p>First Name</p>
+                                        <input type="text" ref={input => { this.first_name = input; }}
+                                            className="form-control" placeholder="type your text" /></div>
+                                    <div className="col-6">
+                                        <p>Last Name</p>
+                                        <input type="text" ref={input => { this.last_name = input; }}
+                                            className="form-control" placeholder="type your text" />
+                                    </div>
+                                </div>
+                                <div className="form-group">
+                                    <label>Email address</label>
+                                    <input type="email"
+                                        ref={input => { this.emailRegist = input; }}
+                                        className="form-control" placeholder="name@example.com" />
+                                </div>
+                                <div className="form-group">
+                                    <label>Password</label>
+                                    <input type="password"
+                                        ref={input => { this.passwordRegist = input; }}
+                                        className="form-control" placeholder="type your password" />
+                                </div>
+                            </form>
+                            {/* {this.onErrorRegist()} */}
+                            <button onClick={()=>{this.onRegistClick()}}
+                                className="btn btn-dark btn-block">Create account</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        )
+            )
+            
+        }
+        
+        return <Redirect to="/" />
+        
     }
 }
 
-export default connect(null, {onRegistClick})(Register)
+const mapStateToProps = (state) => {
+    return {user: state.auth}
+  }
+export default connect(mapStateToProps, {onLoggedIn,onRegistClick})(Register)
