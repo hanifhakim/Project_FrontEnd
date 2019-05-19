@@ -11,15 +11,28 @@ export const onRegistClick = (username, first_name, last_name, email, password) 
       const res  = await  axios.post('/users', {
           username, first_name, last_name, email, password})  
           
-          if(res.data && !res.data.affectedRows){
-            return console.log(res.data);
-          } else if (res.data.affectedRows){
+          if(res.data.sqlMessage.includes('username') && !res.data.affectedRows){
+            // console.log(res.data.sqlMessage);
+
             return swal({
-            title: "Registration Succedeed!",
-            text: "You clicked the button!",
-            icon: "success",
-            button: "Ok!",
-          });
+              title: "Username has been taken",
+              text: "Please kindly try another username",
+              icon: "error"
+            });
+          } else if (res.data.sqlMessage.includes('mail') && !res.data.affectedRows) {
+            return swal({
+              title: "Email has been registered",
+              text: "Please kindly try another email",
+              icon: "error"
+            });
+          }
+          else if (res.data.affectedRows) {
+            return swal({
+              title: "Registration Succedeed!",
+              text: "You clicked the button!",
+              icon: "success",
+              button: "Ok!",
+            });
           }
           console.log('diantara');
       } catch (e) {
@@ -101,17 +114,22 @@ export const keepLogin = (username) => {
     };
   };
   
-  export const onEditUser = (first_name, last_name, email, password) => {
+  export const onEditUser = (first_name, last_name, email, password, avatar) => {
     return async dispatch => {
       try {
-        // const formData = new FormData()
-        // formData.append('first_name', first_name)
-        // formData.append('last_name', last_name)
-        // formData.append('email', email)
-        // formData.append('password', password)
+        const formData = new FormData()
+        formData.append('first_name', first_name)
+        formData.append('last_name', last_name)
+        formData.append('email', email)
+        formData.append('password', password)
+        formData.append('avatar', avatar)
 
         const user_id = cookie.get('idLogin')
-        const res = await axios.post(`/editprofile/${user_id}`,{first_name, last_name, email, password})
+        const res = await axios.patch(`/editprofile/${user_id}`,formData, {
+          headers:{
+            'Content-Type': 'multipart/form-data'
+          }
+        })
         console.log(res.data);
         if(res.data[0].id){
             // cookie.set('idLogin', res.data[0].id, {path:'/'})
@@ -150,6 +168,22 @@ export const keepLogin = (username) => {
           type: 'EDIT_SUCCESS',
           payload: res
       })
+      } catch (e) {
+        
+      }
+    }
+  }
+
+  export const onDeleteAvatar = (user_id) => {
+    return async dispatch => {
+      try {
+          const res = await axios.delete(`/users/deleteAva/${user_id}`)
+
+          return dispatch({
+          type: 'EDIT_SUCCESS',
+          payload: res
+      })
+          
       } catch (e) {
         
       }

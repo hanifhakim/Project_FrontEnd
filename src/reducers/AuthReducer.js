@@ -3,7 +3,8 @@ const init = {
     username: '',
     email:'',
     address:[],
-    user:[]
+    user:[],
+    products:[]
 }
 
 export default (state = init, action) => {
@@ -27,7 +28,9 @@ export default (state = init, action) => {
             return {...state, user: action.payload.data}
         case 'ADD_ADDRESS':
             return {...state, address: action.payload.data}
-            default:
-            return state
+        case 'ADDPRODUCT_SUCCESS':
+            return {...state, products: action.payload.data}
+        default:
+        return state
     }
 }

@@ -116,7 +116,7 @@ class Header extends Component {
                   </a>
                     <ul className="dropdown-menu dropdownParent" aria-labelledby="navbarDropdownMenuLink">
                       <li className="dropdown-submenu ">
-                        <Link to="/manageproduct" className="dropdown-item text-dark">Manage Products</Link>
+                        <Link to="/manageproduct/list" className="dropdown-item text-dark">Manage Products</Link>
                       </li>
                       <li className="dropdown-submenu">
                       {/* <Link to="/" className="dropdown-item text-dark"> */}

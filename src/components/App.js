@@ -13,6 +13,7 @@ import Cart from './Cart';
 import ManageAccount from './ManageAccount';
 import EditAddress from './EditAddress';
 import ManageProduct from './ManageProduct';
+import EditProduct from './EditProduct';
 
 const cookie = new cookies()
 class App extends Component {
@@ -37,7 +38,9 @@ class App extends Component {
                 <Route path="/cart" component ={Cart}/>
                 <Route path="/manageaccount/:info" component ={ManageAccount}/>
                 <Route path="/editaddress/:selected" component ={EditAddress}/>
-                <Route path="/manageproduct" component ={ManageProduct}/>
+                <Route path="/manageproduct/:list" component ={ManageProduct}/>
+                <Route path="/editproduct/:selected" component ={EditProduct}/>
+                {/* <Route path="/manageproduct/:selected" component ={AddProduct}/> */}
                 <Footer/>
             </div>
             </BrowserRouter>

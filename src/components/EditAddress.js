@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import Cookies from 'universal-cookie'
-import axios from '../config/axios'
+import { onEditAddress } from "../actions/address";
 import {Link} from 'react-router-dom'
-// import {onEditUser, getUsers} from "../actions"
+
 import {connect} from "react-redux"
 
-const cookie = new Cookies()
+// const cookie = new Cookies()
 class EditAddress extends Component {
     
-    onButtonClick = async (id) => {
+    onButtonClick = (id) => {
         
         try {
             const nama_depan = this.nama_depan.value
@@ -19,13 +19,10 @@ class EditAddress extends Component {
             const kodepos = this.kodepos.value
             const telepon = this.telepon.value
             const nama_jalan = this.nama_jalan.value
-            const user_id = cookie.get('idLogin')
             const address_id = id
-            console.log(address_id);
             
-            const res = await axios.patch(`/editaddress/${user_id}/${address_id}`, {nama_depan, nama_belakang,
-            provinsi, kabupaten_kota, kecamatan, kodepos, telepon, nama_jalan})
-            console.log(res);            
+            this.props.onEditAddress(nama_depan, nama_belakang, provinsi, kabupaten_kota, kecamatan,
+                kodepos, telepon, nama_jalan, address_id)            
         } catch (e) {
             console.log(e);
             
@@ -137,4 +134,4 @@ const mapStateToProps = (state) => {
             edit: state.auth.user,
             address: state.auth.address}
   }
-export default connect(mapStateToProps)(EditAddress)
+export default connect(mapStateToProps, {onEditAddress})(EditAddress)

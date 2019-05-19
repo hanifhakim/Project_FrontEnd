@@ -110,11 +110,11 @@ class Register extends Component{
                                 </div>
                                 <div className="form-group row">
                                     <div className="col-6">
-                                        <p>First Name</p>
+                                        <div>First Name</div>
                                         <input type="text" ref={input => { this.first_name = input; }}
                                             className="form-control" placeholder="type your text" /></div>
                                     <div className="col-6">
-                                        <p>Last Name</p>
+                                        <div>Last Name</div>
                                         <input type="text" ref={input => { this.last_name = input; }}
                                             className="form-control" placeholder="type your text" />
                                     </div>

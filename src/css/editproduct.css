@@ -1,0 +1,10 @@
+div > form > .form-group > div{
+    margin-bottom: 10px !important;
+    margin-top: 10px !important; 
+    
+    
+}
+
+div > form > .form-group > div > label{
+    font-weight: bold
+}
