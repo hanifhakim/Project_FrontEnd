@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Cookies from 'universal-cookie'
-import { onEditAddress } from "../actions/address";
+// import Cookies from 'universal-cookie'
+import { onEditAddress, getAddress } from "../../actions/address";
 import {Link} from 'react-router-dom'
 
 import {connect} from "react-redux"
@@ -8,7 +8,10 @@ import {connect} from "react-redux"
 // const cookie = new Cookies()
 class EditAddress extends Component {
     
-    onButtonClick = (id) => {
+    state = {
+        addresSelected:[]
+    }
+    onButtonClick = async (id) => {
         
         try {
             const nama_depan = this.nama_depan.value
@@ -21,8 +24,9 @@ class EditAddress extends Component {
             const nama_jalan = this.nama_jalan.value
             const address_id = id
             
-            this.props.onEditAddress(nama_depan, nama_belakang, provinsi, kabupaten_kota, kecamatan,
-                kodepos, telepon, nama_jalan, address_id)            
+            await this.props.onEditAddress(nama_depan, nama_belakang, provinsi, kabupaten_kota, kecamatan,
+                kodepos, telepon, nama_jalan, address_id)  
+            this.props.getAddress()
         } catch (e) {
             console.log(e);
             
@@ -30,12 +34,26 @@ class EditAddress extends Component {
         
     }
 
-    render(){
-        console.log(this.props.address[this.props.match.params.selected]);
-        console.log(this.props.address)
-        console.log(this.props.id);
+    componentDidMount = async () => {
+      await this.props.getAddress()
+      this.checkAddress()
+    }
+    checkAddress = () => {
         
-        if(this.props.address.length !== 0) {
+        var arrNew = this.props.address.filter((item) => {            
+            return item.id === parseInt(this.props.match.params.selected)
+        })
+        
+       return this.setState ({addresSelected: arrNew})
+        
+    }
+
+    render(){
+        // console.log(this.props.address[this.props.match.params.selected]);
+        // console.log(this.state.addresSelected)
+        // console.log(this.props.address)
+        // console.log(this.props);
+        if(this.state.addresSelected.length !== 0) {
             
             var {
                 id,
@@ -46,7 +64,8 @@ class EditAddress extends Component {
                 nama_belakang,
                 nama_depan,
                 provinsi
-            } = this.props.address[this.props.match.params.selected]
+            } = this.state.addresSelected[0]
+            
             
         }
         return (
@@ -115,7 +134,7 @@ class EditAddress extends Component {
                         </div>
                         <div className="form-group">
                             <label>Nama Jalan</label>
-                            <textarea class="form-control" rows="5" id="comment" ref={input => { this.nama_jalan = input; }}></textarea>
+                            <textarea className="form-control" rows="5" id="comment" ref={input => { this.nama_jalan = input; }}></textarea>
                         </div>
                     </form>
                     <button type="submit" className="btn btn-primary" onClick={()=>{this.onButtonClick(id)}}>Submit</button>
@@ -129,9 +148,7 @@ class EditAddress extends Component {
 }
 
 const mapStateToProps = (state) => {
-    return {user: state.auth,
-            // id: state.auth.address.id,
-            edit: state.auth.user,
+    return {
             address: state.auth.address}
   }
-export default connect(mapStateToProps, {onEditAddress})(EditAddress)
+export default connect(mapStateToProps, {onEditAddress, getAddress})(EditAddress)

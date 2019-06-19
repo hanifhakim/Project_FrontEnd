@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { Link, Redirect} from 'react-router-dom'
-import AccountInfo from '../components/AccountInfo'
-import Address from '../components/Address'
+import AccountInfo from './AccountInfo'
+import Address from './Address'
+import MyOrder from './MyOrder'
 import Cookies from 'universal-cookie'
 import {connect} from "react-redux"
-import { getUsers} from "../actions"
+import { getUsers} from "../../actions/users"
 
-import '../css/manageaccount.css'
+import '../../css/manageaccount.css'
 
 
 const cookie = new Cookies()
@@ -18,16 +19,18 @@ class ManageAccount extends Component{
     }
     checkInfo = () => {
         const path = this.props.match.url
-       console.log(path);
+    //    console.log(path);
        if(path === '/manageaccount/info'){
            return <AccountInfo/>
        } else if (path === '/manageaccount/address'){
             return <Address/>
+       } else if (path === '/manageaccount/myorder'){
+            return <MyOrder/>
        }
        
     }
     render(){
-        console.log(cookie.get('userLogin'));
+        // console.log(cookie.get('userLogin'));
         
         if(cookie.get('idLogin') !== undefined || this.props.user !== ''){
             return(
@@ -42,7 +45,7 @@ class ManageAccount extends Component{
                                 <Link to={'/manageaccount/address'}><div>Address</div></Link>
                                 </li>
                                 <li className="list-group-item sidebarAccount">
-                                <Link to={'/manageaccount/wishlist'}><div>Wishlist</div></Link>
+                                <Link to={'/manageaccount/myorder'}><div>My Order</div></Link>
                                 </li>
                             </ul>
                         </div>

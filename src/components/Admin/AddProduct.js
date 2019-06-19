@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 
-import {onAddProduct} from '../actions/product'
+import {onAddProduct} from '../../actions/product'
 import { connect } from "react-redux";
 
-import '../css/addproduct.css'
+import '../../css/addproduct.css'
 
 class AddProduct extends Component {
 
     state={
         radio:''
     }
-    onButtonClick = () => {
+    onButtonClick = async () => {
         
         const name = this.name.value
         const price = this.price.value
@@ -20,13 +20,21 @@ class AddProduct extends Component {
         const category = this.state.radio
         const image = this.image.files[0]
 
-        console.log(price);
+        // console.log(price);
         
-        this.props.onAddProduct(name, price, description, stock, pieces, category, image)
+        await this.props.onAddProduct(name, price, description, stock, pieces, category, image)
         
+        // return this.setState({radio:''})
+        this.name.value = ''
+        this.price.value = ''
+        this.description.value = ''
+        this.stock.value = ''
+        this.pieces.value = ''
+        // this.state.value = undefined
+        this.image.value = null
     }
     render(){
-        console.log(this.state.radio);
+        // console.log(this.state.radio);
         
         return(
             <div className="form-group">

@@ -1,0 +1,62 @@
+/* div >.price:hover div > p.pcs::after {
+    visibility: hidden;
+}
+ */
+ .itemDet:hover span.priceDet{
+    display: none;
+}
+.itemDet:hover span.pcsDet{
+    display: block;
+    
+}
+.itemDet > span.pcsDet {
+    display: none;
+    font-weight: bold;
+    font-size: 20px;
+ }
+ .itemDet > span.priceDet {
+    font-size: 20px
+ }
+
+ div > div > div > div > .itemDet{
+     margin-block-end: 50px;
+     color: darkorange
+ }
+
+ div > div > .qtyDet {
+    background-color: gainsboro;
+    border-radius: 0;
+    padding-top: 6px;
+    padding-right: 35px;
+    margin-left: 15px;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px
+
+}
+
+div > div > .tagInputDet {
+   padding: 5px;
+   border-top-right-radius: 5px;
+   border-bottom-right-radius: 5px
+}
+
+div > div > button.addCart {
+    position: relative;
+    right: 0%;
+    left: 6%;
+ }
+ 
+
+div > div > div > span.wishlist {
+    /* right: 0%; */
+    left: 43%;
+    position: relative;
+}
+
+div > div > div > h3 {
+    margin-left: 0;
+    right: 2%;
+    position: relative;
+    font-weight: inherit
+}
+

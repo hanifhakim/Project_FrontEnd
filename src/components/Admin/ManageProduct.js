@@ -3,9 +3,11 @@ import { Link, Redirect } from "react-router-dom";
 import Cookies from 'universal-cookie'
 import { connect } from "react-redux";
 import AddProduct from './AddProduct';
-import ListProduct from './ListProduct';
+import ManageListProduct from './ManageListProduct';
+import ManageOrders from './ManageOrders';
+import ManageUsers from './ManageUsers';
 
-import '../css/manageproduct.css'
+import '../../css/manageproduct.css'
 
 const cookie = new Cookies()
 
@@ -13,15 +15,19 @@ class ManageProduct extends Component{
 
     checkInfo = () => {
         const path = this.props.match.url
-           console.log(path);
+        //    console.log(path);
            if(path === '/manageproduct/add'){
                return <AddProduct/>
            } else if (path === '/manageproduct/list'){
-                return <ListProduct/>
+                return <ManageListProduct/>
+           } else if (path === '/manageproduct/manageorders'){
+            return <ManageOrders/>
+           } else if (path === '/manageproduct/manageusers'){
+            return <ManageUsers/>
            }
         }
     render(){
-        console.log(this.props.user);
+        // console.log(this.props.user);
         
         if(cookie.get('roleLogin') === 'admin'){
             return(
@@ -33,6 +39,12 @@ class ManageProduct extends Component{
                                     </li>
                                     <li className="list-group-item sidebarAccount">
                                     <Link to={'/manageproduct/list'}className='text-decoration-none p'><div>List Product</div></Link>
+                                    </li>
+                                    <li className="list-group-item sidebarAccount">
+                                    <Link to={'/manageproduct/manageorders'}className='text-decoration-none p'><div>Manage Orders</div></Link>
+                                    </li>
+                                    <li className="list-group-item sidebarAccount">
+                                    <Link to={'/manageproduct/manageusers'}className='text-decoration-none p'><div>Manage Users</div></Link>
                                     </li>
                                 </ul>
                             </div>

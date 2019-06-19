@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import {onRegistClick, onLoggedIn} from "../actions/users"
+import {onRegistClick, onLoggedIn} from "../../actions/users"
 import { Redirect } from "react-router-dom";
 import {connect} from "react-redux"
 import Cookies from 'universal-cookie'
@@ -8,26 +8,74 @@ import Cookies from 'universal-cookie'
 const cookie = new Cookies()
 
 class Register extends Component{
+    
+    state={
+        submit: true,
+        regist: true
+    }
 
-    onRegistClick = () => {
+    registUser = async () => {
         const user = this.usernameRegist.value
         const first_name = this.first_name.value
         const last_name = this.last_name.value
         const email = this.emailRegist.value
         const password = this.passwordRegist.value
-        console.log(user);
-        console.log(email);
-        console.log(password);
-        this.props.onRegistClick(user, first_name, last_name, email, password)
+      
+        var res = await this.props.onRegistClick(user, first_name, last_name, email, password)
+
+        this.usernameRegist.value = ''
+        this.first_name.value = ''
+        this.last_name.value = ''
+        this.emailRegist.value = ''
+        this.passwordRegist.value = ''
+
+        if(res.payload){
+            return null
+        } else {
+            await this.setState({
+                regist: !this.state.regist
+            })
+        }
+    }
+
+    onRegistClick = async () => {
+           
+        await this.setState({
+            regist: !this.state.regist
+        })
+
+        setTimeout(() => {
+            this.registUser()
+          }, 2000);
+  
        
     }
-    onLoginClick = () =>{
-            const user = this.username.value
-            const pass = this.password.value
-            console.log(user);
-            console.log(pass);
-        this.props.onLoggedIn(user, pass)
 
+    loginUser = async () => {
+        const user = this.username.value
+        const pass = this.password.value
+
+        var res = await this.props.onLoggedIn(user, pass)
+        if(res.payload){
+            return null
+        } else {
+            // await this.setState({
+            //     submit: !this.state.submit
+            // })
+        }
+        
+    }
+    onLoginClick = async () =>{
+            
+        // await this.setState({
+        //     submit: !this.state.submit
+        // })
+      
+        setTimeout(() => {
+          this.loginUser()
+        }, 2000);
+
+        
     }
     // errorLogin = () => {
     //     if(this.props.user.errorLogin !== ""){
@@ -89,7 +137,14 @@ class Register extends Component{
                             </form>
                             {/* {this.errorLogin()} */}
                             <button onClick={()=>{this.onLoginClick()}}
-                                className="btn btn-dark btn-block">Submit</button>
+                                className="btn btn-dark btn-block">Submit
+                            </button>
+                            <div hidden={this.state.submit} className='mt-1'>
+                                <span className="spinner-grow text-dark"></span>
+                                <span className="spinner-grow text-dark"></span>
+                                <span className="spinner-grow text-dark"></span>
+                                <span className="spinner-grow text-dark"></span>
+                            </div>
                         </div>
                         <div className="col-sm-6 mt-5 border border-info p-5 ml-auto">
                             <form>
@@ -134,7 +189,14 @@ class Register extends Component{
                             </form>
                             {/* {this.onErrorRegist()} */}
                             <button onClick={()=>{this.onRegistClick()}}
-                                className="btn btn-dark btn-block">Create account</button>
+                                className="btn btn-dark btn-block">Create account
+                            </button>
+                            <div hidden={this.state.regist} className='mt-1 text-center'>
+                                <span className="spinner-grow text-dark"></span>
+                                <span className="spinner-grow text-dark"></span>
+                                <span className="spinner-grow text-dark"></span>
+                                <span className="spinner-grow text-dark"></span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -142,7 +204,7 @@ class Register extends Component{
             
         }
         
-        return <Redirect to="/" />
+        return <Redirect to='/'/>
         
     }
 }

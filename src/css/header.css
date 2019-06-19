@@ -40,3 +40,9 @@
     margin-top: auto !important
    
 }
+
+.cartDisplay{
+    object-fit: cover;
+    width: 10px;
+    height: 10px;
+}

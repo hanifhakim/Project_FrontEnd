@@ -5,7 +5,7 @@ import {createStore, applyMiddleware} from 'redux'
 import thunk from 'redux-thunk'
 import logger from 'redux-logger'
 
-import './css/style.css'
+// import './css/style.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import App from './components/App'
 import reducers from './reducers'

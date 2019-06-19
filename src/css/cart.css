@@ -1,0 +1,38 @@
+.card{
+    /* background-color: rgb(201, 198, 198); */
+    height: auto !important;
+}
+
+.listItem{
+    border: none !important;
+    
+}
+
+.panel-title > a{
+    color: black !important;
+    text-decoration: none !important;
+}
+.btnDeleteCart {
+    border-radius: 1;
+    top: 70%;
+    left: 70%;
+    position: absolute;
+    max-height: 50px;
+    padding: 3%;
+    background: white;
+    border: 0px;
+    color: maroon
+    
+}
+.btnMovewishlistCart {
+    border-radius: 1;
+    padding: 3%;
+    top: 70%;
+    right: 35%;
+    position: absolute;
+    max-height: 50px;
+    background: white;
+    border: 0px;
+    color: maroon
+
+}

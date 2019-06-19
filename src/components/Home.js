@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import {Link} from 'react-router-dom'
 
 
 import {connect} from 'react-redux'
@@ -25,7 +26,11 @@ class Home extends Component {
                                 <div className="card-body">
                                     <h5 className="card-title">SeaFood Product</h5>
                                     <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                    <p className="card-text"><button className="btn btn-outline-dark">Go shop</button></p>
+                                    <Link to='/product/seafood'>
+                                        <p className="card-text">
+                                            <button className="btn btn-outline-dark">Go shop</button>
+                                        </p>
+                                    </Link>
                                 </div>
                             </div>
                         <div className="col-md-3">
@@ -35,7 +40,11 @@ class Home extends Component {
                                 <div className="card-body">
                                     <h5 className="card-title">FreshWater Product</h5>
                                     <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                    <p className="card-text"><button className="btn btn-outline-dark">Go shop</button></p>
+                                    <Link to='/product/freshwater'>
+                                        <p className="card-text">
+                                            <button className="btn btn-outline-dark">Go shop</button>
+                                        </p>
+                                    </Link>
                                 </div>
                             </div>
                         </div>

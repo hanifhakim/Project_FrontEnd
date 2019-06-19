@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {onAddressAdd, getAddress, deleteAddress} from "../actions/address"
+import {onAddressAdd, getAddress, deleteAddress} from "../../actions/address"
 import {Link} from 'react-router-dom'
 import {connect} from "react-redux"
 // import EditAddress from './EditAddress';
@@ -16,46 +16,44 @@ class Address extends Component{
         const provinsi = this.provinsi.value
         const kabupaten_kota = this.kabupaten_kota.value
         const kecamatan = this.kecamatan.value
-        const kodepos = this.kodepos.value
+        const kodepos = parseInt(this.kodepos.value)
         const telepon = this.telepon.value
         const nama_jalan = this.nama_jalan.value
 
-        console.log(nama_depan);
-        console.log(nama_belakang);
-        console.log(provinsi);
-        console.log(kabupaten_kota);
-        console.log(kecamatan);
-        console.log(kodepos);
-        console.log(nama_jalan);
+        // console.log(nama_depan);
+        // console.log(nama_belakang);
+        // console.log(provinsi);
+        // console.log(kabupaten_kota);
+        // console.log(kecamatan);
+        // console.log(kodepos);
+        // console.log(nama_jalan);
         
         this.props.onAddressAdd(nama_depan, nama_belakang, provinsi, kabupaten_kota, kecamatan, kodepos, telepon, nama_jalan)
         
     }
     componentDidMount = () => {
         this.props.getAddress()
-    }//pindahin
-
+    }
+   
+    
     onDeleteAddress = (id) => {
-        this.props.deleteAddress(id)
+     this.props.deleteAddress(id)
     }
 
-    onEditAddress = (id) => {
-        this.setState({editAddress: !this.state.editAddress})
-    }
 
     renderList = () => {
         return this.props.address.map((item, i) => {
             return(
-                <div key={item.id} class="card bg-light mx-auto my-3">
-                    <div class="card-body text-center">
-                        <p class="card-text lead">Nama Penerima: {item.nama_depan} {item.nama_belakang}</p> 
-                        <p class="card-text lead"> 
+                <div key={item.id} className="card bg-light mx-auto my-3">
+                    <div className="card-body text-center">
+                        <p className="card-text lead">Nama Penerima: {item.nama_depan} {item.nama_belakang}</p> 
+                        <p className="card-text lead"> 
                         Alamat: {item.nama_jalan}, Kec. {item.kecamatan}, 
                                                 Kab/Kot. {item.kabupaten_kota}, {item.provinsi},
                                                 {item.kodepos}, Telepon:{item.telepon}
                                                 
                         </p>
-                        <Link to={`/editaddress/${i}`}><button className='d-inline-block btn btn-dark mx-2'>Edit</button>
+                        <Link to={`/editaddress/${item.id}`}><button className='d-inline-block btn btn-dark mx-2'>Edit</button>
                         </Link>
                         <button className='d-inline-block btn btn-dark mx-2' onClick={()=>{this.onDeleteAddress(item.id)}}>
                         Delete</button>
@@ -72,7 +70,7 @@ class Address extends Component{
                     {this.renderList()}
                 </div>
                 <div>
-                    <button onClick={()=>{this.setState({edit: !this.state.edit})}}>Minimize</button>
+                    <button className='btn btn-outline-success' onClick={()=>{this.setState({edit: !this.state.edit})}}>Minimize</button>
                 </div>
                 <div>
                 <form>
@@ -117,7 +115,7 @@ class Address extends Component{
                         </div>
                         <div className="form-group">
                             <label>Nama Jalan</label>
-                            <textarea class="form-control" rows="5" id="comment" ref={input => { this.nama_jalan = input; }}></textarea>
+                            <textarea className="form-control" rows="5" id="comment" ref={input => { this.nama_jalan = input; }}></textarea>
                         </div>
                 </form>
                 <button type="submit" className="btn btn-primary" onClick={this.onButtonClick}>Submit</button>
@@ -132,7 +130,7 @@ class Address extends Component{
                     {this.renderList()}
                 </div>
                 <div>
-                    <button onClick={()=>{this.setState({edit: !this.state.edit})}}>Add new address</button>
+                    <button className='btn btn-outline-success' onClick={()=>{this.setState({edit: !this.state.edit})}}>Add new address</button>
                 </div>
                 </div>
             )
