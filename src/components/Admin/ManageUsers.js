@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from '../../config/axios'
-
+import swal from 'sweetalert'
 
 class ManageUsers extends Component {
     
@@ -15,6 +15,12 @@ class ManageUsers extends Component {
         
         if(confirm){
             await axios.delete(`/users/${user_id}`)
+            swal({
+                title: "Delete Succedeed!",
+                text: "You clicked the button!",
+                icon: "success",
+                button: "Ok!",
+                });
             this.getAllUsers()
         }
        

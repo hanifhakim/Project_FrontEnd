@@ -4,6 +4,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 // import Cookies from 'universal-cookie'
 // import {Link} from 'react-router-dom'
 import '../../css/listorder.css'
+import swal from 'sweetalert'
 
 // const cookie = new Cookies()
 
@@ -43,6 +44,12 @@ class ManageOrders extends Component {
             
              await axios.patch(`/minusstock/${prod_id}`,{qtyOrder, qtyOld})       
         }
+        swal({
+            title: "Delivered Success",
+            text: "You clicked the button!",
+            icon: "success",
+            button: "Ok!",
+            });
         this.getOrder()
     }
 

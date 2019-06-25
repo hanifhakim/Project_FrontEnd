@@ -35,7 +35,7 @@ class ManageAccount extends Component{
         if(cookie.get('idLogin') !== undefined || this.props.user !== ''){
             return(
                 <div>
-                    <div className="container-fluid row mt-3">
+                    <div className="container-fluid row mt-3"  style={{marginBottom:'300px'}}>
                         <div className="col-3">
                             <ul className="list-group-flush">
                                 <li className="list-group-item sidebarAccountUser">
@@ -61,7 +61,7 @@ class ManageAccount extends Component{
                             </div>
                         </div>
                     </div>
-                    <div>
+                    <div className='fixed-bottom'>
                         <Footer/>
                     </div>
                 </div>

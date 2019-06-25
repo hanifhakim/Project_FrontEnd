@@ -24,6 +24,12 @@ class Cart extends Component{
         if(confirm){
             var user_id = cookie.get('idLogin')
             await this.props.deleteCart(user_id, product_id)
+            swal({
+                title: "Delete Succedeed!",
+                text: "You clicked the button!",
+                icon: "success",
+                button: "Ok!",
+                });
             this.wishList()
             this.onlyCart()
         }

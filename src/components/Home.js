@@ -87,7 +87,7 @@ class Home extends Component {
                     </div>
                 </div>
                 <div className="container testimonial-group">
-                    <h4><span className='border-bottom border-warning'>Produk Terlaris</span></h4>
+                    <h4><span className='border-bottom border-warning'>Paling Sering Dipilih</span></h4>
                         <div className="row text-center flex-nowrap">
                             {this.renderHome()}
                         </div>

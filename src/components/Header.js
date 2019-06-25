@@ -129,27 +129,6 @@ class Header extends Component {
               </button>
               <div className="collapse navbar-collapse" id="navbarCollapse">
                 <ul className="navbar-nav ml-auto">
-                  <li className="nav-item">
-                    <Link to="/" className="nav-link"><i className="fas fa-home"></i></Link>
-                  </li>
-                  <li className="nav-item dropdown">
-                    <a className="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink"
-                      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Shop
-                  </a>
-                    <ul className="dropdown-menu dropdownParent" aria-labelledby="navbarDropdownMenuLink">
-                      <div className="dropdown-header">Products</div>
-                      <li className="dropdown-submenu">
-                        <Link to='/product/seafood' className="dropdown-item">Seafood</Link>
-                      </li>
-                      <li className="dropdown-submenu">
-                        <Link to='/product/freshwater' className="dropdown-item">Freshwater</Link>
-                      </li>
-                      <li className="dropdown-submenu">
-                        <Link to="/product/all" className="dropdown-item">Shop All</Link>
-                      </li>
-                    </ul>
-                  </li>
                   <li className="nav-item dropdown">
                     <a className="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink"
                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

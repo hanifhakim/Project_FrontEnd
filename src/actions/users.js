@@ -16,7 +16,7 @@ export const onRegistClick = (username, first_name, last_name, email, password) 
           if(res.data.affectedRows) {
             return swal({
               title: "Registration Succedeed!",
-              text: "You clicked the button!",
+              text: "Check your email for verification link",
               icon: "success",
               button: "Ok!",
             });

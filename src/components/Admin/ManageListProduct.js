@@ -27,6 +27,12 @@ class ManageListProduct extends Component {
         
         if(confirm){
             await this.props.onDeleteProduct(id)
+            swal({
+                title: "Delete Succedeed!",
+                text: "You clicked the button!",
+                icon: "success",
+                button: "Ok!",
+                });
             this.getProducts()
         }
     }
