@@ -36,7 +36,8 @@
     position: absolute !important;
     top: 50px !important; 
     border-radius: 0 !important;
-    opacity: 0.7;
+    opacity: 0.9;
+    background-color: gainsboro;
     margin-top: auto !important
    
 }

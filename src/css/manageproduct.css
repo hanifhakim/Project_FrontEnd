@@ -1,10 +1,18 @@
-.listItem > .sidebarAccount{
+.sidebarAccount{
     border-bottom: 1px;
-    border-style: dashed;
+    /* border-style: dashed; */
 }
 div > div > div > ul > li > .p {
   color: black;
   text-decoration: none;
   font-weight: 700;
+    
+}
+div > div > div > ul > li > .list {
+  color: black;
+  text-decoration: none;
+  font-weight: 700;
+  font-family: 'Roboto Slab', serif;
+  font-size: 20px
     
 }

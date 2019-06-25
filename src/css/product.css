@@ -20,8 +20,6 @@
     border-top-left-radius: 5px;
     padding-top: 5px
     
-    
-
 }
 
 div > div > .tagInput {
@@ -55,9 +53,8 @@ div > div > .rowAdd {
 .imgHov:hover span.wishlist {
     display: block;
     position: absolute;
-    top: 25%;
+    top: 18%;
     left: 20%;
-    
  }
 
 .listItem{

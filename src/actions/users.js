@@ -64,6 +64,7 @@ export const onLoggedIn = (username, password) => {
                 type: LOGIN_SUCCESS,
                 payload: {id: res.data[0].id,
                   username: res.data[0].username,
+                  role: res.data[0].role,
                   email: res.data[0].email,
                   password: res.data[0].password}
             })
@@ -86,14 +87,14 @@ export const onLoggedIn = (username, password) => {
     }
     
 }
-export const keepLogin = (id, username) => {
+export const keepLogin = (id, username, role) => {
   if (username === undefined) {
     return{
       type: KEEP_LOGIN,
       payload:{
         id:'',
         username:'',
-       //  email:''
+        role:''
       }
     }
   }
@@ -103,7 +104,7 @@ export const keepLogin = (id, username) => {
     payload:{
       id,
       username,
-     //  email
+      role
     }
   }
  }
@@ -126,13 +127,24 @@ export const keepLogin = (id, username) => {
   };
   
   export const onEditUser = (first_name, last_name, email, password, avatar) => {
-    return async dispatch => {
+    return async () => {
       try {
+        // console.log(last_name);
         const formData = new FormData()
-        formData.append('first_name', first_name)
-        formData.append('last_name', last_name)
-        formData.append('email', email)
-        formData.append('password', password)
+        if(first_name && last_name && email){
+          
+          formData.append('first_name', first_name)
+          formData.append('last_name', last_name)
+          formData.append('email', email)
+          formData.append('password', password)
+
+        } else {
+          return swal({
+            title: "Can't update",
+            text: "Check yout input",
+            icon: "error"
+          });
+        }
 
         if(avatar){
           formData.append('avatar', avatar)

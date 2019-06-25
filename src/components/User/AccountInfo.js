@@ -11,7 +11,7 @@ class AccountInfo extends Component{
     state={
        ava: true,
        defaultAva: require("../../img/user.svg"),
-       imagePreview:[] 
+       imagePreview:''
     }
     onButtonEdit = async() => {
         const first_name = this.first_name.value
@@ -27,7 +27,7 @@ class AccountInfo extends Component{
         // this.avatar.value = null
         await this.props.onDeleteAvatar(id)
         await this.setState({
-            imagePreview:[]
+            imagePreview:''
         })
         this.props.getUsers()
     }
@@ -35,12 +35,12 @@ class AccountInfo extends Component{
     getUser = async () => {
         const user_id = cookie.get('idLogin')
         const res = await this.props.getUsers()
-        console.log(res);
+        // console.log(res);
         
         const avatar = res.payload.data[0].avatar
         if(avatar){
             await this.setState({
-                imagePreview:[ `http://localhost:2010/editprofile/${user_id}/${avatar}`]
+                imagePreview: `http://localhost:2010/editprofile/${user_id}/${avatar}`
             })
         }
     }
@@ -50,11 +50,10 @@ class AccountInfo extends Component{
     
     imageChange = (event) => {
         event.preventDefault()
-
         const imagePreview = URL.createObjectURL(event.target.files[0])
-        console.log(imagePreview);
+        // console.log(imagePreview);
 
-        this.setState({imagePreview: [imagePreview]})
+        this.setState({imagePreview: imagePreview})
         
     }
 
@@ -65,17 +64,18 @@ class AccountInfo extends Component{
             var {first_name, last_name, email, id} = this.props.edit[0]
         }
         
-        // console.log(avatar);
+        console.log(this.state.imagePreview);
         
         return(
             <div className="container">
-                <h1>Account Details</h1>
+                <h1><span className='border-bottom border-warning'>Account Details</span></h1>
                 <div className="form-group">
-                    <p>Avatar</p>
+                    <p className='text-center'>Avatar</p>
                     <div className="card mx-auto" style={{ width: "18rem" }}>
-                        <img className="card-img-top" src={this.state.imagePreview.length !== 0  ?
-                         this.state.imagePreview[0] :
-                         this.state.defaultAva }
+                        <img className="card-img-top" 
+                            src={this.state.imagePreview.length !== 0  ?
+                                this.state.imagePreview :
+                                this.state.defaultAva }
                             alt='avatar' />
                     </div>
                     <div className="text-center my-2">
@@ -88,24 +88,25 @@ class AccountInfo extends Component{
                         <div className="text-center">
                             <button className='btn btn-outline-dark mr-3' onClick={()=>{this.onDeleteAva(id)}}>Delete</button>
                             <label className="btn btn-outline-dark m-0">
-                                <input multiple="multiple" ref={input => this.avatar = input} type="file" className="d-none" onChange={this.imageChange}/>
-                                    Upload Avatar
+                                <input multiple="multiple" ref={input => this.avatar = input} 
+                                    type="file" className="d-none" onChange={this.imageChange}/>
+                                Upload Avatar
                             </label>
-                            {/* <input className='ml-3' type="file" id="myfile" multiple="multiple" ref={input => this.avatar = input} /> */}
                         </div>
                     </div>
                 </div>
                     <div className="form-group">
                         <label>First Name</label>
-                        <input ref={input => this.first_name = input} type="text" className="form-control" id="name" defaultValue={first_name} />
+                        <input ref={input => this.first_name = input} type="text" 
+                            className="form-control" id="name" defaultValue={first_name}/>
                     </div>
                     <div className="form-group">
                         <label >Last Name</label>
-                        <input ref={input => this.last_name = input} type="text" className="form-control" id="name" defaultValue={last_name} />
+                        <input ref={input => this.last_name = input} type="text" className="form-control" id="name" defaultValue={last_name}/>
                     </div>
                     <div className="form-group">
                         <label >Email address</label>
-                        <input ref={input => this.email = input} type="email" className="form-control" id="email" defaultValue={email} />
+                        <input ref={input => this.email = input} type="email" className="form-control" id="email" defaultValue={email}/>
                         <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
                     </div>
                     <div className="form-group">

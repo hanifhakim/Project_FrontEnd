@@ -10,3 +10,4 @@ export const ADD_PRODUCT = 'ADD_PRODUCT'
 export const GET_PRODUCT = 'GET_PRODUCT'
 
 export const GET_CART = 'GET_CART'
+export const GET_CARTONLY = 'GET_CARTONLY'

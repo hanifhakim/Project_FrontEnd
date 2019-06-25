@@ -4,6 +4,8 @@ import {Link} from 'react-router-dom'
 import {connect} from "react-redux"
 // import EditAddress from './EditAddress';
 
+import '../../css/address.css'
+
 
 class Address extends Component{
     state={
@@ -20,14 +22,6 @@ class Address extends Component{
         const telepon = this.telepon.value
         const nama_jalan = this.nama_jalan.value
 
-        // console.log(nama_depan);
-        // console.log(nama_belakang);
-        // console.log(provinsi);
-        // console.log(kabupaten_kota);
-        // console.log(kecamatan);
-        // console.log(kodepos);
-        // console.log(nama_jalan);
-        
         this.props.onAddressAdd(nama_depan, nama_belakang, provinsi, kabupaten_kota, kecamatan, kodepos, telepon, nama_jalan)
         
     }
@@ -44,19 +38,23 @@ class Address extends Component{
     renderList = () => {
         return this.props.address.map((item, i) => {
             return(
-                <div key={item.id} className="card bg-light mx-auto my-3">
+                <div key={item.id} className="card mx-auto my-3 border-dark">
                     <div className="card-body text-center">
-                        <p className="card-text lead">Nama Penerima: {item.nama_depan} {item.nama_belakang}</p> 
-                        <p className="card-text lead"> 
-                        Alamat: {item.nama_jalan}, Kec. {item.kecamatan}, 
-                                                Kab/Kot. {item.kabupaten_kota}, {item.provinsi},
-                                                {item.kodepos}, Telepon:{item.telepon}
-                                                
-                        </p>
-                        <Link to={`/editaddress/${item.id}`}><button className='d-inline-block btn btn-dark mx-2'>Edit</button>
+                        <p className="card-text lead">
+                            <strong>Nama Penerima: {item.nama_depan} {item.nama_belakang}</strong>
+                        </p> 
+                        <div className="card-text lead">
+                            <div>Alamat: {item.nama_jalan}</div> 
+                            <div>Kec. {item.kecamatan}, Kab/Kot. {item.kabupaten_kota}</div> 
+                            <div>{item.provinsi}, {item.kodepos}</div>             
+                            Telepon:{item.telepon}
+                        </div>
+                        <Link to={`/editaddress/${item.id}`}>
+                            <button className='d-inline-block btn bg-none mx-2' style={{color: 'blue'}} >Edit</button>
                         </Link>
-                        <button className='d-inline-block btn btn-dark mx-2' onClick={()=>{this.onDeleteAddress(item.id)}}>
-                        Delete</button>
+                        <button className='d-inline-block btn bg-none mx-2' style={{color: 'red'}} 
+                            onClick={()=>{this.onDeleteAddress(item.id)}}>Delete
+                        </button>
                     </div>
                 </div>
             )
@@ -65,73 +63,82 @@ class Address extends Component{
     render(){
         if(this.state.edit){
             return(
-                <div className="container">
-                <div>
-                    {this.renderList()}
+                <div className="container" style={{marginBottom: '700px', height:'100%'}}>
+                    <div>
+                        {this.renderList()}
+                    </div>
+                    <div className='d-flex justify-content-end'>
+                        <button className='btn btn-outline-primary' 
+                            onClick={() => { this.setState({ edit: !this.state.edit }) }}>Minimize
+                        </button>
+                    </div>
+                    <div>
+                        <form>
+                            <h1 className='display-6 text-center'>Add New Address</h1>
+                            <div className="form-group row">
+                                <div className="col-6">
+                                    <p>Nama Depan</p>
+                                    <input type="text" ref={input => { this.nama_depan = input; }}
+                                        className="form-control inputAddress" placeholder="type your text" />
+                                </div>
+                                <div className="col-6">
+                                    <p>Nama Belakang</p>
+                                    <input type="text" ref={input => { this.nama_belakang = input; }}
+                                        className="form-control inputAddress" placeholder="type your text"/>
+                                </div>
+                            </div>
+                            <div className="form-group row">
+                                <div className="col-6">
+                                    <p>Provinsi</p>
+                                    <input type="text" ref={input => { this.provinsi = input; }}
+                                        className="form-control inputAddress" placeholder="type your text"/>
+                                </div>
+                                <div className="col-6">
+                                    <p>Kabupaten/Kota</p>
+                                    <input type="text" ref={input => { this.kabupaten_kota = input; }}
+                                        className="form-control inputAddress" placeholder="type your text"/>
+                                </div>
+                            </div>
+                            <div className="form-group row">
+                                <div className="col-6">
+                                    <p>Kecamatan</p>
+                                    <input type="text" ref={input => { this.kecamatan = input; }}
+                                        className="form-control inputAddress" placeholder="type your text" />
+                                </div>
+                                <div className="col-6 ">
+                                    <p>Kode Pos</p>
+                                    <input type="number" ref={input => { this.kodepos = input; }}
+                                        className="form-control inputAddress" placeholder="type your text" />
+                                </div>
+                                <div className="col-6">
+                                    <p>Nomor Telepon</p>
+                                    <input type="text" ref={input => { this.telepon = input; }}
+                                        className="form-control inputAddress" placeholder="type your text" />
+                                </div>
+                            </div>
+                            <div className="form-group">
+                                <label>Nama Jalan</label>
+                                <textarea className="form-control inputAddress" rows="5" id="comment" ref={input => { this.nama_jalan = input; }}></textarea>
+                            </div>
+                        </form>
+                        <div className='d-flex justify-content-center'>
+                            <button type="submit" className="btn btn-outline-primary" onClick={this.onButtonClick}>Submit</button>
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    <button className='btn btn-outline-success' onClick={()=>{this.setState({edit: !this.state.edit})}}>Minimize</button>
-                </div>
-                <div>
-                <form>
-                        <h1>Address</h1>
-                        <div className="form-group row">
-                            <div className="col-6">
-                                <p>Nama Depan</p>
-                                <input type="text" ref={input => { this.nama_depan = input; }}
-                                    className="form-control" placeholder="type your text" /></div>
-                            <div className="col-6">
-                                <p>Nama Belakang</p>
-                                <input type="text" ref={input => { this.nama_belakang = input; }}
-                                    className="form-control" placeholder="type your text" />
-                            </div>
-                        </div>
-                        <div className="form-group row">
-                            <div className="col-6">
-                                <p>Provinsi</p>
-                                <input type="text" ref={input => { this.provinsi = input; }}
-                                    className="form-control" placeholder="type your text" /></div>
-                            <div className="col-6">
-                                <p>Kabupaten/Kota</p>
-                                <input type="text" ref={input => { this.kabupaten_kota = input; }}
-                                    className="form-control" placeholder="type your text" />
-                            </div>
-                        </div>
-                        <div className="form-group row">
-                            <div className="col-6">
-                                <p>Kecamatan</p>
-                                <input type="text" ref={input => { this.kecamatan = input; }}
-                                    className="form-control" placeholder="type your text" /></div>
-                            <div className="col-6">
-                                <p>Kode Pos</p>
-                                <input type="number" ref={input => { this.kodepos = input; }}
-                                    className="form-control" placeholder="type your text" />
-                            </div>
-                            <div className="col-6">
-                                <p>Nomor Telepon</p>
-                                <input type="text" ref={input => { this.telepon = input; }}
-                                    className="form-control" placeholder="type your text" />
-                            </div>
-                        </div>
-                        <div className="form-group">
-                            <label>Nama Jalan</label>
-                            <textarea className="form-control" rows="5" id="comment" ref={input => { this.nama_jalan = input; }}></textarea>
-                        </div>
-                </form>
-                <button type="submit" className="btn btn-primary" onClick={this.onButtonClick}>Submit</button>
-            </div>
-            </div>
             )
         }
         else {
             return(
                 <div className="container">
-                <div>
-                    {this.renderList()}
-                </div>
-                <div>
-                    <button className='btn btn-outline-success' onClick={()=>{this.setState({edit: !this.state.edit})}}>Add new address</button>
-                </div>
+                    <div>
+                        {this.renderList()}
+                    </div>
+                    <div className='d-flex justify-content-center'>
+                        <button className='btn btn-outline-dark'
+                            onClick={() => { this.setState({ edit: !this.state.edit }) }}>Add new address
+                        </button>
+                    </div>
                 </div>
             )
         }

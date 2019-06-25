@@ -1,12 +1,16 @@
 import axios from '../config/axios'
+import Cookies from 'universal-cookie'
 
-import { GET_CART } from "../actions/actionTypes";
+import { GET_CART, GET_CARTONLY } from "../actions/actionTypes";
+
+const cookie = new Cookies ()
 
 export const onAddToCart = (user_id, product_id, qty, cls) => {
     return async () => {
 
         try {
             await axios.post(`/addCart/${user_id}/${product_id}`, {qty, cls})
+            // cookie.set('emailLogin', res.data[0].email, {path:'/'})
         } catch (e) {
             console.log(e);
             
@@ -66,6 +70,7 @@ export const getCart = (user_id) => {
     return async dispatch => {
         try {
             const res = await axios.get(`/shop/cart/${user_id}`)
+            
             return dispatch({
                 type: GET_CART,
                 payload: res
@@ -76,12 +81,19 @@ export const getCart = (user_id) => {
         }
     }
 }
+
 export const getCartOnly = (user_id) => {
     return async dispatch => {
         try {
             const res = await axios.get(`/shop/cartOnly/${user_id}`)
+            if(res.data.length !== 0){
+                cookie.set('cartUser', res.data.length, {path:'/'})
+            } else {
+                cookie.remove('cartUser', {path:'/'})
+            }
+            
             return dispatch({
-                type: GET_CART,
+                type: GET_CARTONLY,
                 payload: res
             })
         } catch (e) {

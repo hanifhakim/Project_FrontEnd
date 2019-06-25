@@ -5,3 +5,25 @@ ul > .sidebarAccount{
     text-decoration: none ;
     font-weight: 100;
 }
+
+.sidebarAccountUser {
+    border-bottom: 1px;
+    /* border-collapse: collapse; */
+    /* border-style: dashed; */
+}
+
+div > div > div > ul > li > .list {
+    color: black;
+    text-decoration: none;
+    font-weight: 700;
+    font-family: 'Roboto Slab', serif;
+    font-size: 20px
+      
+  }
+
+  div > div > div > ul > li > .list:hover {
+    color: blue;
+    text-decoration: none;
+    font-weight: 700;
+      
+  }

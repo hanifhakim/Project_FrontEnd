@@ -10,8 +10,14 @@ class ManageUsers extends Component {
     }
 
     deleteUser = async (user_id) => {
-        await axios.delete(`/users/${user_id}`)
-        this.getAllUsers()
+
+        const confirm = window.confirm('Mau hapus?')
+        
+        if(confirm){
+            await axios.delete(`/users/${user_id}`)
+            this.getAllUsers()
+        }
+       
     }
     
     deleteAva = async (user_id) => {
@@ -25,7 +31,36 @@ class ManageUsers extends Component {
             users: res.data
         })
         // console.log(res.data);
-        
+    }
+
+    componentDidMount = () => {
+        this.getAllUsers()
+    }
+
+    sortList = async () => {
+        var fnsort = document.getElementById('manageSort').value
+        console.log(fnsort);
+        if(fnsort === 'Username'){                
+            const res = await axios.get(`/sortusername`)
+            this.setState({users: res.data})
+        } else if (fnsort === 'First Name' ){
+            const res = await axios.get(`/sortfirstname`)
+            this.setState({users: res.data})
+        } else if (fnsort === 'Last Name'){
+            const res = await axios.get(`/sortlastname`)
+            this.setState({users: res.data})
+        } else if (fnsort === 'Avatar'){
+            const res = await axios.get(`/sortavatar`)
+            this.setState({users: res.data})
+        } else if (fnsort === 'New-Old'){
+            const res = await axios.get(`/sortuserdatedesc`)
+            this.setState({users: res.data})
+        } else if (fnsort === 'Old-New'){
+            const res = await axios.get(`/sortuserrdateasc`)
+            this.setState({users: res.data})
+        } else {
+            this.getAllUsers()
+        }
     }
 
     renderList = () => {
@@ -39,34 +74,45 @@ class ManageUsers extends Component {
                     <td>{item.last_name}</td>
                     <td>{item.email}</td>
                     <td>
-                        <img className='w2' src={ 
-                            item.avatar === null ? this.state.defaultAva 
-                            :`http://localhost:2010/editprofile/${item.id}/${item.avatar}`} alt="img"></img>
+                        <img className='w2' 
+                            src={item.avatar === null ? this.state.defaultAva 
+                            :`http://localhost:2010/editprofile/${item.id}/${item.avatar}`} alt="img">
+                        </img>
                     </td>
                     <td className='d-flex flex-column'>
-                        <button onClick={()=>{this.deleteUser(item.id)}} className='btn btn-dark m-2 btn-sm'>Delete Users</button>
-                        <button onClick={()=>{this.deleteAva(item.id)}} className='btn btn-danger m-2 btn-sm'>Delete Avatar</button>
+                        <button onClick={()=>{this.deleteUser(item.id)}} 
+                            className='btn btn-dark m-2 btn-sm'>Delete Users
+                        </button>
+                        <button onClick={()=>{this.deleteAva(item.id)}} 
+                            className='btn btn-danger m-2 btn-sm'>Delete Avatar
+                        </button>
                     </td>
                 </tr>
             )
-    
         })
-        
-    }
-
-    componentDidMount = () => {
-        this.getAllUsers()
     }
 
     render(){
         // console.log(this.state.users);
-        
         return(
             <div className="container">
                 <h1 className="text-center">List Users</h1>
+                <div className=' d-inline'>
+                    <div className="form-group ">
+                        <select className="form-control bg-light text-black " id="manageSort" onChange={this.sortList}>
+                            <option>Sort</option>
+                            <option>Username</option>
+                            <option>First Name</option>
+                            <option>Last Name</option>
+                            <option>Avatar</option>
+                            <option>New-Old</option>
+                            <option>Old-New</option>
+                        </select>
+                    </div>
+                </div>
                 <table className="table table-hover mb-5">
                     <thead>
-                        <tr className='text-center'>
+                        <tr className='text-center bg-dark text-light'>
                             <th scope="col">NO</th>
                             <th scope="col">ID</th>
                             <th scope="col">USERNAME</th>

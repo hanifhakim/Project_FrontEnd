@@ -5,12 +5,15 @@ import {Link} from 'react-router-dom'
 
 import {connect} from "react-redux"
 
+import '../../css/address.css'
+
 // const cookie = new Cookies()
 class EditAddress extends Component {
     
     state = {
         addresSelected:[]
     }
+
     onButtonClick = async (id) => {
         
         try {
@@ -29,23 +32,21 @@ class EditAddress extends Component {
             this.props.getAddress()
         } catch (e) {
             console.log(e);
-            
         }
         
     }
 
     componentDidMount = async () => {
-      await this.props.getAddress()
-      this.checkAddress()
+        await this.props.getAddress()
+        this.checkAddress()
     }
+
     checkAddress = () => {
-        
         var arrNew = this.props.address.filter((item) => {            
             return item.id === parseInt(this.props.match.params.selected)
         })
         
        return this.setState ({addresSelected: arrNew})
-        
     }
 
     render(){
@@ -66,38 +67,47 @@ class EditAddress extends Component {
                 provinsi
             } = this.state.addresSelected[0]
             
-            
         }
+
         return (
             <div>
-                <div className="container-fluid row">
+                <div className="container-fluid row mt-3">
                     <div className="col-3">
-                        <ul className="list-group">
-                            <li className="list-group-item">
-                                <Link to={'/manageaccount/info'}>accountinfo</Link>
+                        <ul className="list-group-flush">
+                            <li className="list-group-item sidebarAccountUser">
+                                <Link to={'/manageaccount/info'} className='list'>
+                                    <div>Account Info</div>
+                                </Link>
                             </li>
-                            <li className="list-group-item">
-                                <Link to={'/manageaccount/address'}>adress</Link>
+                            <li className="list-group-item sidebarAccountUser">
+                                <Link to={'/manageaccount/address'} className='list'>
+                                    <div>Address</div>
+                                </Link>
                             </li>
-                            <li className="list-group-item">
-                                <Link to={'/manageaccount/editaccount'}>edit account</Link>
+                            <li className="list-group-item sidebarAccountUser">
+                                <Link to={'/manageaccount/myorder'} className='list'>
+                                    <div>My Order</div>
+                                </Link>
                             </li>
                         </ul>
                     </div>
                     <div className="col-7">
                     <form>
-                        <h1>Address</h1>
+                        <h1 className='text-center'>My Address</h1>
                         <div className="form-group row">
                             <div className="col-6">
                                 <p>Nama Depan</p>
                                 <input type="text" ref={input => { this.nama_depan = input; }}
                                     defaultValue={nama_depan}
-                                    className="form-control" placeholder="type your text" /></div>
+                                    className="form-control editAddress" placeholder="type your text"
+                                />
+                            </div>
                             <div className="col-6">
                                 <p>Nama Belakang</p>
                                 <input type="text" ref={input => { this.nama_belakang = input; }}
                                     defaultValue={nama_belakang}
-                                    className="form-control" placeholder="type your text" />
+                                    className="form-control editAddress" placeholder="type your text"
+                                />
                             </div>
                         </div>
                         <div className="form-group row">
@@ -105,12 +115,15 @@ class EditAddress extends Component {
                                 <p>Provinsi</p>
                                 <input type="text" ref={input => { this.provinsi = input; }}
                                     defaultValue={provinsi}
-                                    className="form-control" placeholder="type your text" /></div>
+                                    className="form-control editAddress" placeholder="type your text"
+                                />
+                            </div>
                             <div className="col-6">
                                 <p>Kabupaten/Kota</p>
                                 <input type="text" ref={input => { this.kabupaten_kota = input; }}
                                     defaultValue={kabupaten_kota}
-                                    className="form-control" placeholder="type your text" />
+                                    className="form-control editAddress" placeholder="type your text"
+                                />
                             </div>
                         </div>
                         <div className="form-group row">
@@ -118,31 +131,40 @@ class EditAddress extends Component {
                                 <p>Kecamatan</p>
                                 <input type="text" ref={input => { this.kecamatan = input; }}
                                     defaultValue={kecamatan}
-                                    className="form-control" placeholder="type your text" /></div>
+                                    className="form-control editAddress" placeholder="type your text"
+                                />
+                            </div>
                             <div className="col-6">
                                 <p>Kode Pos</p>
                                 <input type="number" ref={input => { this.kodepos = input; }}
                                     defaultValue={kodepos}
-                                    className="form-control" placeholder="type your text" />
+                                    className="form-control editAddress" placeholder="type your text" 
+                                />
                             </div>
                         </div>
-                        <div className="col-6">
-                                <p>Nomor Telepon</p>
+                        <div className="col-6 pl-0">
+                                <p className='mb-0'>Nomor Telepon</p>
                                 <input type="text" ref={input => { this.telepon = input; }}
                                  defaultValue={telepon}
-                                    className="form-control" placeholder="type your text" />
+                                    className="form-control editAddress" placeholder="type your text"
+                                />
                         </div>
                         <div className="form-group">
-                            <label>Nama Jalan</label>
-                            <textarea className="form-control" rows="5" id="comment" ref={input => { this.nama_jalan = input; }}></textarea>
+                            <label className='mt-4'>Nama Jalan</label>
+                            <textarea className="form-control editAddress" rows="5" id="comment" 
+                                ref={input => { this.nama_jalan = input; }}>                                
+                            </textarea>
                         </div>
                     </form>
-                    <button type="submit" className="btn btn-primary" onClick={()=>{this.onButtonClick(id)}}>Submit</button>
-                    <Link to ='/manageaccount/address'><button type="submit" className="btn btn-secondary">Cancel</button>
+                    <button type="submit" className="btn btn-outline-primary mx-2" 
+                        onClick={()=>{this.onButtonClick(id)}}>Submit
+                    </button>
+                    <Link to='/manageaccount/address'>
+                        <button type="submit" className="btn btn-outline-secondary" >Back</button>
                     </Link>
                 </div>
-                </div>
             </div>
+        </div>
         )
     }
 }

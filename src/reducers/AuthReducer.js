@@ -3,6 +3,7 @@ import { GET_USER, LOGIN_SUCCESS, LOGOUT_SUCCESS, KEEP_LOGIN, GET_ADDRESS, ADD_A
 const init = {
     id: '',
     username: '',
+    role:'',
     email:'',
     address:[],
     user:[]
@@ -14,13 +15,15 @@ export default (state = init, action) => {
             return {...state,
                 id: action.payload.id,
                 username: action.payload.username,
+                role: action.payload.role,
                 email: action.payload.email,
                 password: action.payload.password,}
         case KEEP_LOGIN:
             return {
               ...state,
               id: action.payload.id,
-              username: action.payload.username
+              username: action.payload.username,
+              role: action.payload.role
             };
          case LOGOUT_SUCCESS:
             return {...state, ...init}; 

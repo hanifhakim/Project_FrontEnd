@@ -1,16 +1,10 @@
-div > form > .form-group > div > .inputAdd {
+.inputAdd, textarea.inputAdd  {
     border-collapse: collapse;
     border-color: black;
     border-radius: 0
 }
 div > form > .form-group > div > p {
     margin-bottom: 1px
-}
-
-div > form > .form-group > textarea {
-    border-collapse: collapse;
-    border-color: black;
-    border-radius: 0
 }
 
 div > form > .form-group > p {

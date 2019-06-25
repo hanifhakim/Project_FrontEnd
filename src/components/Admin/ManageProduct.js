@@ -8,6 +8,7 @@ import ManageOrders from './ManageOrders';
 import ManageUsers from './ManageUsers';
 
 import '../../css/manageproduct.css'
+import Footer from '../Footer';
 
 const cookie = new Cookies()
 
@@ -26,34 +27,47 @@ class ManageProduct extends Component{
             return <ManageUsers/>
            }
         }
+
     render(){
         // console.log(this.props.user);
-        
         if(cookie.get('roleLogin') === 'admin'){
-            return(
+            return (
+                <div>
                     <div className="container-fluid row mt-3">
-                            <div className="col-2">
-                                <ul className="list-group-flush listItem">
-                                    <li className="list-group-item sidebarAccount">
-                                    <Link to={'/manageproduct/add' }className='text-decoration-none p'><div>Add Product</div></Link>
-                                    </li>
-                                    <li className="list-group-item sidebarAccount">
-                                    <Link to={'/manageproduct/list'}className='text-decoration-none p'><div>List Product</div></Link>
-                                    </li>
-                                    <li className="list-group-item sidebarAccount">
-                                    <Link to={'/manageproduct/manageorders'}className='text-decoration-none p'><div>Manage Orders</div></Link>
-                                    </li>
-                                    <li className="list-group-item sidebarAccount">
-                                    <Link to={'/manageproduct/manageusers'}className='text-decoration-none p'><div>Manage Users</div></Link>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div className="col-9">
-                                <div>
-                                    {this.checkInfo()}
-                                </div>
+                        <div className="col-2">
+                            <ul className="list-group-flush">
+                                <li className="list-group-item sidebarAccount">
+                                    <Link to={'/manageproduct/add'} className='list'>
+                                        <div>Add Product</div>
+                                    </Link>
+                                </li>
+                                <li className="list-group-item sidebarAccount">
+                                    <Link to={'/manageproduct/list'} className='list'>
+                                        <div>List Product</div>
+                                    </Link>
+                                </li>
+                                <li className="list-group-item sidebarAccount">
+                                    <Link to={'/manageproduct/manageorders'} className='list'>
+                                        <div>Manage Orders</div>
+                                    </Link>
+                                </li>
+                                <li className="list-group-item sidebarAccount">
+                                    <Link to={'/manageproduct/manageusers'} className='list'>
+                                        <div>Manage Users</div>
+                                    </Link>
+                                </li>
+                            </ul>
+                        </div>
+                        <div className="col-9">
+                            <div>
+                                {this.checkInfo()}
                             </div>
                         </div>
+                    </div>
+                    <div>
+                        <Footer />
+                    </div>
+                </div>
             )
         }
         return  <Redirect to="/" />

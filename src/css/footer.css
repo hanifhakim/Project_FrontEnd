@@ -1,0 +1,9 @@
+body, html {
+    height: 100% !important;
+}
+.footerA{
+  margin-top: 1000px;
+  border: 30px !important;
+  border-color: black;
+  border-collapse: collapse
+}
