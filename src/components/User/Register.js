@@ -56,7 +56,9 @@ class Register extends Component{
         const pass = this.password.value
 
         var res = await this.props.onLoggedIn(user, pass)
+        // console.log(res);
         if(res.payload){
+            //get cart one user
             var user_id = cookie.get('idLogin')
             await this.props.getCartOnly(user_id)
         } else {
@@ -66,6 +68,7 @@ class Register extends Component{
         }
         
     }
+
     onLoginClick = async () =>{
             
         await this.setState({
@@ -185,7 +188,5 @@ class Register extends Component{
     }
 }
 
-const mapStateToProps = (state) => {
-    return {user: state.auth}
-  }
-export default connect(mapStateToProps, {onLoggedIn,onRegistClick,getCartOnly})(Register)
+
+export default connect(null, {onLoggedIn,onRegistClick,getCartOnly})(Register)

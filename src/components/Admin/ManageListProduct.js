@@ -23,18 +23,26 @@ class ManageListProduct extends Component {
     }
 
     onButtonDelete = async(id) => {
-        const confirm = window.confirm('Mau hapus?')
-        
-        if(confirm){
-            await this.props.onDeleteProduct(id)
-            swal({
-                title: "Delete Succedeed!",
-                text: "You clicked the button!",
+
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this imaginary file!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+          })
+         .then( async (willDelete) => {
+            if (willDelete) {
+              await this.props.onDeleteProduct(id)
+              swal("Poof! Your imaginary file has been deleted!", {
                 icon: "success",
-                button: "Ok!",
-                });
-            this.getProducts()
-        }
+              });
+              this.getProducts()
+            } else {
+              return swal("Your imaginary file is safe!");
+            }
+          });
+
     }
 
     renderList = () => {
@@ -98,7 +106,7 @@ class ManageListProduct extends Component {
                 <div className=' d-inline'>
                     <div className="form-group ">
                         <select className="form-control bg-light text-black " id="manageSort" onChange={this.sortList}>
-                            <option>Sort</option>
+                            <option>Sort By</option>
                             <option>A-Z</option>
                             <option>Z-A</option>
                             <option>Low-High</option>

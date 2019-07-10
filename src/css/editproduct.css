@@ -1,10 +1,8 @@
-div > form > .form-group > div{
-    margin-bottom: 10px !important;
-    margin-top: 10px !important; 
-    
-    
+.editProdInput {
+    margin-bottom: 10px;
+    margin-top: 10px; 
 }
 
-div > form > .form-group > div > label{
+div > form > .form-group > div > label {
     font-weight: bold
 }

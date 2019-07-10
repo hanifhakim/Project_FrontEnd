@@ -11,7 +11,9 @@ class MyOrder extends Component {
     state = {
         orders:[],
         orderDetails:[],
-        modal: false
+        modal: false,
+        nestedModal: false,
+        closeAll: false
     }
 
     renderList2 = () => {
@@ -33,8 +35,23 @@ class MyOrder extends Component {
         this.setState({
           modal: !this.state.modal
         });
-      }
+    }
 
+    toggleNested = () => {
+        this.setState({
+            nestedModal: !this.state.nestedModal,
+            closeAll: false
+        });
+    }
+
+    toggleAll = () => {
+        this.setState({
+            modal: !this.state.modal,
+            nestedModal: !this.state.nestedModal,
+            closeAll: true
+        });
+    }
+    
     detailOrders = async (order_id, user_id) => {
         this.toggle()
         const res = await axios.get(`/getorder/${user_id}/${order_id}`)
@@ -42,6 +59,9 @@ class MyOrder extends Component {
     }
 
     renderList = () => {
+        const item2 = this.state.orderDetails[0]
+        // console.log(item2);
+        
         return this.state.orders.map((item, i)=>{
             return (
                 <tr className='text-center' key={Math.random()}>
@@ -81,6 +101,32 @@ class MyOrder extends Component {
                                         {this.renderList2()}
                                     </tbody>
                                 </table>
+                                <Button color="info" onClick={this.toggleNested}>Shipping Address</Button>
+                                {/* agar ada data yg mau ditampilkan */}
+                                {this.state.orderDetails.length > 0 ? (
+                                    <Modal isOpen={this.state.nestedModal} toggle={this.toggleNested} onClosed={this.state.closeAll ? this.toggle : undefined}>
+                                    <ModalHeader>Your Address</ModalHeader>
+                                    <ModalBody>
+                                        <div className="card mx-auto my-3 border-dark">
+                                            <div className="card-body text-center">
+                                                <p className="card-text lead">
+                                                    <strong>Nama Penerima: {item2.nama_depan} {item2.nama_belakang}</strong>
+                                                </p>
+                                                <div className="card-text lead">
+                                                    <div>Alamat: {item2.nama_jalan}</div>
+                                                    <div>Kec. {item2.kecamatan}, Kab/Kot. {item2.kabupaten_kota}</div>
+                                                    <div>{item2.provinsi}, {item2.kodepos}</div>
+                                                    Telepon:{item2.telepon}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ModalBody>
+                                    <ModalFooter>
+                                        <Button color="primary" onClick={this.toggleNested}>Done</Button>{' '}
+                                        <Button color="secondary" onClick={this.toggleAll}>All Done</Button>
+                                    </ModalFooter>
+                                </Modal>
+                                ): undefined}
                             </ModalBody>
                             <ModalFooter>
                                 <Button color="primary" onClick={this.toggle}>OK</Button>{' '}
@@ -107,6 +153,7 @@ class MyOrder extends Component {
     }
 
     render(){
+        // console.log(this.state.orderDetails);
         return(
             <div className="container">
             <h1 className="text-center">Order List</h1>

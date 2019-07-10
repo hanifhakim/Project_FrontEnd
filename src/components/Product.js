@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
-import {getProducts} from '../actions/product'
-
+import { getProducts } from '../actions/product'
 import { connect } from 'react-redux'
 import ProductList from '../components/ProductList'
-
-import '../css/product.css'
 import axios from '../config/axios';
 import Footer from './Footer';
 
-class Product extends Component{
+import '../css/product.css'
+
+
+class Product extends Component {
 
     state = {
-        products:[],
-        productSearch:[],
-        category:''
+        products: [],
+        productSearch: [],
+        category: ''
     }
 
     //Kirim array untuk mapping product
@@ -23,15 +23,15 @@ class Product extends Component{
             return (
                 <ProductList item={item} key={i} />
             )
-        }) 
+        })
     }
 
     //ambil data (ALL) from db
     gettingProducts = async (cat) => {
-      const res =  await this.props.getProducts(cat)
-      const {data} = res.payload
-      this.setState({products: data, productSearch: data})
-    //   console.log(res.payload.data)
+        const res = await this.props.getProducts(cat)
+        const { data } = res.payload
+        this.setState({ products: data, productSearch: data })
+        //   console.log(res.payload.data)
     }
 
     //Filtering sesuai parameter yg diisi
@@ -41,28 +41,28 @@ class Product extends Component{
         const max = parseInt(this.max.value)
 
         var newArr = this.state.products.filter((item, i) => {
-            if(isNaN(min) && isNaN(max)){
+            if (isNaN(min) && isNaN(max)) {
                 return item.name.toLowerCase().includes(name.toLowerCase());
-            } else if (isNaN(min)){
+            } else if (isNaN(min)) {
                 return (
                     item.name.toLowerCase().includes(name.toLowerCase()) &&
                     item.price <= max)
-                ;
-            } else if (isNaN(max)){
+                    ;
+            } else if (isNaN(max)) {
                 return (
                     item.name.toLowerCase().includes(name.toLowerCase()) &&
                     item.price >= min)
-                ;
+                    ;
             } else {
                 return (
                     item.name.toLowerCase().includes(name.toLowerCase()) &&
                     item.price <= max &&
                     item.price >= min)
-                ;
+                    ;
             }
         })
 
-        return this.setState({productSearch: newArr})
+        return this.setState({ productSearch: newArr })
     }
 
     //Reset filter
@@ -74,41 +74,40 @@ class Product extends Component{
         this.max.value = ''
     }
 
-
     //Filtering dgn name:'ikan'
     onIkan = async () => {
-       await this.setState({name: 'ikan'})
-    
+        await this.setState({ name: 'ikan' })
+
         const name = this.state.name
         var newArr = this.state.products.filter((item, i) => {
-                return item.name.toLowerCase().includes(name.toLowerCase());
+            return item.name.toLowerCase().includes(name.toLowerCase());
         })
 
-        return this.setState({productSearch: newArr})
+        return this.setState({ productSearch: newArr })
     }
 
-     //Filtering dgn name:'udang'
+    //Filtering dgn name:'udang'
     onUdang = async () => {
-       await this.setState({name: 'udang'})
-    
+        await this.setState({ name: 'udang' })
+
         const name = this.state.name
         var newArr = this.state.products.filter((item, i) => {
-                return item.name.toLowerCase().includes(name.toLowerCase());
+            return item.name.toLowerCase().includes(name.toLowerCase());
         })
 
-        return this.setState({productSearch: newArr})
+        return this.setState({ productSearch: newArr })
     }
 
-     //Filtering dgn name:'kerang'
+    //Filtering dgn name:'kerang'
     onKerang = async () => {
-       await this.setState({name: 'kerang'})
-    
+        await this.setState({ name: 'kerang' })
+
         const name = this.state.name
         var newArr = this.state.products.filter((item, i) => {
-                return item.name.toLowerCase().includes(name.toLowerCase());
+            return item.name.toLowerCase().includes(name.toLowerCase());
         })
 
-        return this.setState({productSearch: newArr})
+        return this.setState({ productSearch: newArr })
     }
 
     //Sortirt berdasarkan yg diklik
@@ -117,67 +116,67 @@ class Product extends Component{
         const category = this.props.match.params.category
         // console.log(fnsort);
 
-        if(category === 'all'){
-            if(fnsort === 'A-Z'){                
+        if (category === 'all') {
+            if (fnsort === 'A-Z') {
                 const res = await axios.get(`/sortnameasc`)
-                this.setState({productSearch: res.data})
-            } else if (fnsort === 'Z-A' ){
+                this.setState({ productSearch: res.data })
+            } else if (fnsort === 'Z-A') {
                 const res = await axios.get(`/sortnamedesc`)
-                this.setState({productSearch: res.data})
-            } else if (fnsort === 'High-Low'){
+                this.setState({ productSearch: res.data })
+            } else if (fnsort === 'High-Low') {
                 const res = await axios.get(`/sortpricedesc`)
-                this.setState({productSearch: res.data})
-            } else if (fnsort === 'Low-High'){
+                this.setState({ productSearch: res.data })
+            } else if (fnsort === 'Low-High') {
                 const res = await axios.get(`/sortpriceasc`)
-                this.setState({productSearch: res.data})
-            } else if (fnsort === 'New-Old'){
+                this.setState({ productSearch: res.data })
+            } else if (fnsort === 'New-Old') {
                 const res = await axios.get(`/sortdatedesc`)
-                this.setState({productSearch: res.data})
-            } else if (fnsort === 'Old-New'){
+                this.setState({ productSearch: res.data })
+            } else if (fnsort === 'Old-New') {
                 const res = await axios.get(`/sortdateasc`)
-                this.setState({productSearch: res.data})
-            } 
-            
-        } else if (category === 'seafood'){
-            if(fnsort === 'A-Z'){                
+                this.setState({ productSearch: res.data })
+            }
+
+        } else if (category === 'seafood') {
+            if (fnsort === 'A-Z') {
                 const res = await axios.get(`/catsortnameasc/${category}`)
-                this.setState({productSearch: res.data})
-            } else if (fnsort === 'Z-A' ){
+                this.setState({ productSearch: res.data })
+            } else if (fnsort === 'Z-A') {
                 const res = await axios.get(`/catsortnamedesc/${category}`)
-                this.setState({productSearch: res.data})
-            } else if (fnsort === 'High-Low'){
+                this.setState({ productSearch: res.data })
+            } else if (fnsort === 'High-Low') {
                 const res = await axios.get(`/catsortpricedesc/${category}`)
-                this.setState({productSearch: res.data})
-            } else if (fnsort === 'Low-High'){
+                this.setState({ productSearch: res.data })
+            } else if (fnsort === 'Low-High') {
                 const res = await axios.get(`/catsortpriceasc/${category}`)
-                this.setState({productSearch: res.data})
-            } else if (fnsort === 'New-Old'){
+                this.setState({ productSearch: res.data })
+            } else if (fnsort === 'New-Old') {
                 const res = await axios.get(`/catsortdatedesc/${category}`)
-                this.setState({productSearch: res.data})
-            } else if (fnsort === 'Old-New'){
+                this.setState({ productSearch: res.data })
+            } else if (fnsort === 'Old-New') {
                 const res = await axios.get(`/catsortdateasc/${category}`)
-                this.setState({productSearch: res.data})
-            } 
-        }  else if (category === 'freshwater'){
-            if(fnsort === 'A-Z'){                
+                this.setState({ productSearch: res.data })
+            }
+        } else if (category === 'freshwater') {
+            if (fnsort === 'A-Z') {
                 const res = await axios.get(`/catsortnameasc/${category}`)
-                this.setState({productSearch: res.data})
-            } else if (fnsort === 'Z-A' ){
+                this.setState({ productSearch: res.data })
+            } else if (fnsort === 'Z-A') {
                 const res = await axios.get(`/catsortnamedesc/${category}`)
-                this.setState({productSearch: res.data})
-            } else if (fnsort === 'High-Low'){
+                this.setState({ productSearch: res.data })
+            } else if (fnsort === 'High-Low') {
                 const res = await axios.get(`/catsortpricedesc/${category}`)
-                this.setState({productSearch: res.data})
-            } else if (fnsort === 'Low-High'){
+                this.setState({ productSearch: res.data })
+            } else if (fnsort === 'Low-High') {
                 const res = await axios.get(`/catsortpriceasc/${category}`)
-                this.setState({productSearch: res.data})
-            } else if (fnsort === 'New-Old'){
+                this.setState({ productSearch: res.data })
+            } else if (fnsort === 'New-Old') {
                 const res = await axios.get(`/catsortdatedesc/${category}`)
-                this.setState({productSearch: res.data})
-            } else if (fnsort === 'Old-New'){
+                this.setState({ productSearch: res.data })
+            } else if (fnsort === 'Old-New') {
                 const res = await axios.get(`/catsortdateasc/${category}`)
-                this.setState({productSearch: res.data})
-            } 
+                this.setState({ productSearch: res.data })
+            }
         } else {
             this.gettingProducts()
         }
@@ -185,14 +184,14 @@ class Product extends Component{
     }
 
     //Kalo ada perubahan 
-    async componentWillUpdate (nextProps, nextState) {
-        if(this.state.category !== nextProps.match.params.category){
-            await this.setState ({
+    async componentWillUpdate(nextProps, nextState) {
+        if (this.state.category !== nextProps.match.params.category) {
+            await this.setState({
                 category: this.props.match.params.category
             })
-            console.log(this.state.category);
+            // console.log(this.state.category);
             console.log('dari will update');
-            
+
             // console.log(this.props.match.params.category);
             var cat = this.state.category
             this.gettingProducts(cat)
@@ -208,24 +207,22 @@ class Product extends Component{
             category: this.props.match.params.category
         })
         console.log('dari didmount');
-        
+
         // console.log(this.state.category);
-        // var cat = this.state.category
-        // await this.gettingProducts(cat)
     }
 
-    render(){
+    render() {
         console.log(this.state.productSearch);
         console.log('dari render');
-        
-        return(
+
+        return (
             <div>
                 <div className="container-fluid">
                     <h1 className='border-dark border-bottom border-top mt-3 text-center'>Products</h1>
                     <div className='d-flex justify-content-end'>
                         <div className="form-group">
                             <select className="form-control" id="sel1" onChange={this.sortList}>
-                                <option>Sort</option>
+                                <option>Sort By</option>
                                 <option>A-Z</option>
                                 <option>Z-A</option>
                                 <option>Low-High</option>
@@ -246,7 +243,7 @@ class Product extends Component{
                                         <h6 className="panel-title ml-2">
                                             <Link to='/product/all'>
                                                 <button className='border-0 bg-white'
-                                                    onClick={()=>{this.gettingProducts('all')}}>All
+                                                    onClick={() => { this.gettingProducts('all') }}>All
                                                 </button>
                                             </Link>
                                         </h6>
@@ -301,13 +298,13 @@ class Product extends Component{
                             <button onClick={this.onButtonSearch} className="btn btn-outline-secondary btn-block mt-5">Search</button>
                             <button onClick={this.onButtonReset} className="btn btn-outline-secondary btn-block mt-1">Reset</button>
                         </div>
-                        <div className='col-10 row'>
-                        {this.renderList()}
+                        <div className='col-10 row' style={{ marginBottom: '300px' }}>
+                            {this.renderList()}
                         </div>
                     </div>
                 </div>
-                <div className='fixed-bottom'>
-                    <Footer/>
+                <div className='fixed-bottom' style={{ marginTop: '300px' }}>
+                    <Footer />
                 </div>
             </div>
         )
@@ -315,10 +312,10 @@ class Product extends Component{
 }
 
 const mapStateToProps = (state) => {
-    return{
+    return {
         products: state.product.products
     }
 
 }
 
-export default connect (mapStateToProps,{ getProducts })(Product)
+export default connect(mapStateToProps, { getProducts })(Product)

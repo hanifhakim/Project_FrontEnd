@@ -14,6 +14,7 @@ export const onAddProduct = (name, price, description, stock, pieces, category, 
         formData.append('stock', stock)
         formData.append('pieces', pieces)
         formData.append('category', category)
+       
         if(image){
             formData.append('image', image)
         }
@@ -22,7 +23,7 @@ export const onAddProduct = (name, price, description, stock, pieces, category, 
                     'Content-Type': 'multipart/form-data'
                 }
             })
-            var response = res.data
+            const response = res.data
             
             if(response.length){
                 swal({
@@ -53,20 +54,20 @@ export const onAddProduct = (name, price, description, stock, pieces, category, 
     }
 }
 
+//display
 export const getProducts = (cat) => {
     return async dispatch => {
         try {
             if(cat === 'all'){
-
                 const res = await axios.get(`/manageproduct/list`)
                 return dispatch({
                     type: GET_PRODUCT,
                     payload: res
                 })
             }
+
             const res = await axios.get(`/product/${cat}`)
             // console.log(res);
-            
             return dispatch({
                 type: GET_PRODUCT,
                 payload: res
@@ -92,39 +93,6 @@ export const getManageProducts = () => {
         }
     }
 }
-
-// export const getProdSeafood = () => {
-//      return async dispatch => {
-//         try {
-//             const res = await axios.get('/product/seafood')
-//             console.log(res);
-            
-//             return dispatch({
-//                 type: GET_PRODUCT,
-//                 payload: res
-//             })
-//         } catch (e) {
-//             console.log(e);
-            
-//         }
-//     }
-// }
-
-// export const getProdFreshwater = () => {
-//     return async dispatch => {
-//        try {
-//            const res = await axios.get('/product/freshwater')
-
-//            return dispatch({
-//                type: GET_PRODUCT,
-//                payload: res
-//            })
-//        } catch (e) {
-//            console.log(e);
-           
-//        }
-//    }
-// }
 
 export const onDeleteProduct = (id) => {
     return async () => {
@@ -155,14 +123,13 @@ export const onEditProduct = (name, price, description, stock, pieces, category,
                 formData.append('image', image)
             }
             
-            const res = await axios.patch(`/editproduct/${product_id}`, formData, {
+            await axios.patch(`/editproduct/${product_id}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
             })
-            console.log(res.data);
-            console.log(res.description);
-        
+            // console.log(res.data);
+            // console.log(res.description);
                return swal({
                     title: "Edit Succedeed!",
                     text: "You clicked the button!",
@@ -179,6 +146,7 @@ export const onEditProduct = (name, price, description, stock, pieces, category,
               });
         }
         } catch (e) {
+            console.log(e);
             
         }
     }

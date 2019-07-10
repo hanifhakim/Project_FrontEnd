@@ -1,37 +1,37 @@
 import React, { Component } from 'react'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 
 import axios from '../config/axios'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 
 import '../css/home.css'
 import '../css/sliderproduct.css'
 import Footer from './Footer';
 
 class Home extends Component {
-   
+
     state = {
-        product:[]
+        product: []
     }
 
     getProductHome = async () => {
         const res = await axios.get(`/getproducthome`)
         // console.log(res);
-        this.setState({product: res.data})
+        this.setState({ product: res.data })
     }
-    
+
     renderHome = () => {
         return this.state.product.map((item, i) => {
-            return(
+            return (
                 <div className="card col-sm-3 border border-dark m-0.5" style={{ width: "100%" }} key={i}>
                     <div className=''>
-                        <img className="productImageHome" 
-                            src={`http://localhost:2010/manageproduct/list/${item.image}`} alt="Cardcap" 
+                        <img className="productImageHome"
+                            src={`http://localhost:2010/manageproduct/list/${item.image}`} alt="Cardcap"
                         />
                     </div>
                     <div className="card-body">
-                        <Link to={`/detailproduct/${item.id}`} 
+                        <Link to={`/detailproduct/${item.id}`}
                             className='text-decoration-none text-dark'><h5>{item.name}</h5>
                         </Link>
                     </div>
@@ -88,20 +88,20 @@ class Home extends Component {
                 </div>
                 <div className="container testimonial-group">
                     <h4><span className='border-bottom border-warning'>Paling Sering Dipilih</span></h4>
-                        <div className="row text-center flex-nowrap">
-                            {this.renderHome()}
-                        </div>
+                    <div className="row text-center flex-nowrap">
+                        {this.renderHome()}
+                    </div>
                 </div>
                 <Footer />
             </div>
         )
     }
 }
-    
-    
+
+
 const mapStateToProps = (state) => {
-        return {
-            user: state.auth
-        }
-  }
-export default connect (mapStateToProps)(Home)
+    return {
+        user: state.auth
+    }
+}
+export default connect(mapStateToProps)(Home)

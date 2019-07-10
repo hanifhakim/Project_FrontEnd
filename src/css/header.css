@@ -1,44 +1,19 @@
-.myProduct, .login{
+/* .myProduct, .login{
     text-align: right;
-  
-}
+} */
 .navbar-brand{
-    font-size: 0.7cm !important; 
+    font-size: 0.7cm; 
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    text-align: left !important
+    text-align: left
 }
-
-/* DROPDOWN HOVER */
-.navbar-nav li:hover > ul.dropdownChild {
-    display: block;
-}
-.dropdown-submenu {
-    position:relative;
-}
-.dropdown-submenu>.dropdown-menu {
-    top:0;
-    left:100%;
-    margin-top:-6px;
-}
-/* rotate caret on hover */
-.dropdown-menu > li > a:hover:after {
-    text-decoration: underline;
-    transform: rotate(-90deg);
-} 
-.dropdownChild{
-    position: absolute!important; 
-    border-radius: 0 !important;
-    margin-top: auto !important;
-    list-style: none !important;
-}  
 
 .dropdownParent{
-    position: absolute !important;
-    top: 50px !important; 
-    border-radius: 0 !important;
+    position: absolute;
+    top: 52px; 
+    border-radius: 0;
     opacity: 0.9;
-    background-color: gainsboro;
-    margin-top: auto !important
+    background-color: rgb(252, 228, 228);
+    margin-top: auto
    
 }
 

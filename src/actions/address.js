@@ -13,7 +13,7 @@ export const onAddressAdd = (nama_depan, nama_belakang, provinsi, kabupaten_kota
         const res = await axios.post(`/address/${user_id}`,{nama_depan,
         nama_belakang, provinsi, kabupaten_kota, kecamatan, kodepos, telepon, nama_jalan}
         )
-        console.log(res.data);
+        // console.log(res.data);
         if(res.data.sqlMessage){
           
           return swal({
@@ -72,7 +72,6 @@ export const onAddressAdd = (nama_depan, nama_belakang, provinsi, kabupaten_kota
             return dispatch({
               type: GET_ADDRESS,
               payload: res
-              
            })
           } else {
             return swal("Your imaginary file is safe!");
@@ -93,6 +92,7 @@ export const onAddressAdd = (nama_depan, nama_belakang, provinsi, kabupaten_kota
       const user_id = cookie.get('idLogin')
       const res = await axios.patch(`/editaddress/${user_id}/${address_id}`, {nama_depan, nama_belakang,
         provinsi, kabupaten_kota, kecamatan, kodepos, telepon, nama_jalan})
+        
         if(res.data.sqlMessage){
           
           return swal({

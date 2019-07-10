@@ -3,11 +3,9 @@
     border-color: black;
     border-radius: 0
 }
-div > form > .form-group > div > p {
-    margin-bottom: 1px
-}
 
-div > form > .form-group > p {
+.addProdInput {
+    /* background-color: aqua; */
     margin-bottom: 1px
 }
 

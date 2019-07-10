@@ -30,6 +30,7 @@ class EditAddress extends Component {
             await this.props.onEditAddress(nama_depan, nama_belakang, provinsi, kabupaten_kota, kecamatan,
                 kodepos, telepon, nama_jalan, address_id)  
             this.props.getAddress()
+
         } catch (e) {
             console.log(e);
         }
@@ -57,14 +58,8 @@ class EditAddress extends Component {
         if(this.state.addresSelected.length !== 0) {
             
             var {
-                id,
-                kabupaten_kota,
-                kecamatan,
-                kodepos,
-                telepon,
-                nama_belakang,
-                nama_depan,
-                provinsi
+                id, kabupaten_kota, kecamatan, kodepos,
+                telepon, nama_belakang, nama_depan, provinsi
             } = this.state.addresSelected[0]
             
         }
@@ -171,6 +166,7 @@ class EditAddress extends Component {
 
 const mapStateToProps = (state) => {
     return {
-            address: state.auth.address}
+            address: state.auth.address
+        }
   }
 export default connect(mapStateToProps, {onEditAddress, getAddress})(EditAddress)

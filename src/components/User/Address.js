@@ -2,16 +2,16 @@ import React, { Component } from 'react';
 import {onAddressAdd, getAddress, deleteAddress} from "../../actions/address"
 import {Link} from 'react-router-dom'
 import {connect} from "react-redux"
-// import EditAddress from './EditAddress';
+
 
 import '../../css/address.css'
 
 
 class Address extends Component{
     state={
-        edit: false,
-        editAddress: false
+        edit: false
     }
+
     onButtonClick = () => {
         const nama_depan = this.nama_depan.value
         const nama_belakang = this.nama_belakang.value
@@ -25,15 +25,14 @@ class Address extends Component{
         this.props.onAddressAdd(nama_depan, nama_belakang, provinsi, kabupaten_kota, kecamatan, kodepos, telepon, nama_jalan)
         
     }
+
     componentDidMount = () => {
         this.props.getAddress()
     }
    
-    
     onDeleteAddress = (id) => {
      this.props.deleteAddress(id)
     }
-
 
     renderList = () => {
         return this.props.address.map((item, i) => {
@@ -60,6 +59,7 @@ class Address extends Component{
             )
         })
     }
+
     render(){
         if(this.state.edit){
             return(
@@ -77,47 +77,47 @@ class Address extends Component{
                             <h1 className='display-6 text-center'>Add New Address</h1>
                             <div className="form-group row">
                                 <div className="col-6">
-                                    <p>Nama Depan</p>
+                                    <p className='labelInput'>Nama Depan</p>
                                     <input type="text" ref={input => { this.nama_depan = input; }}
                                         className="form-control inputAddress" placeholder="type your text" />
                                 </div>
                                 <div className="col-6">
-                                    <p>Nama Belakang</p>
+                                    <p className='labelInput'>Nama Belakang</p>
                                     <input type="text" ref={input => { this.nama_belakang = input; }}
                                         className="form-control inputAddress" placeholder="type your text"/>
                                 </div>
                             </div>
                             <div className="form-group row">
                                 <div className="col-6">
-                                    <p>Provinsi</p>
+                                    <p className='labelInput'>Provinsi</p>
                                     <input type="text" ref={input => { this.provinsi = input; }}
                                         className="form-control inputAddress" placeholder="type your text"/>
                                 </div>
                                 <div className="col-6">
-                                    <p>Kabupaten/Kota</p>
+                                    <p className='labelInput'>Kabupaten/Kota</p>
                                     <input type="text" ref={input => { this.kabupaten_kota = input; }}
                                         className="form-control inputAddress" placeholder="type your text"/>
                                 </div>
                             </div>
                             <div className="form-group row">
                                 <div className="col-6">
-                                    <p>Kecamatan</p>
+                                    <p className='labelInput'>Kecamatan</p>
                                     <input type="text" ref={input => { this.kecamatan = input; }}
                                         className="form-control inputAddress" placeholder="type your text" />
                                 </div>
                                 <div className="col-6 ">
-                                    <p>Kode Pos</p>
+                                    <p className='labelInput'>Kode Pos</p>
                                     <input type="number" ref={input => { this.kodepos = input; }}
                                         className="form-control inputAddress" placeholder="type your text" />
                                 </div>
                                 <div className="col-6">
-                                    <p>Nomor Telepon</p>
+                                    <p className='labelInput'>Nomor Telepon</p>
                                     <input type="text" ref={input => { this.telepon = input; }}
                                         className="form-control inputAddress" placeholder="type your text" />
                                 </div>
                             </div>
                             <div className="form-group">
-                                <label>Nama Jalan</label>
+                                <label className='labelInput'>Nama Jalan</label>
                                 <textarea className="form-control inputAddress" rows="5" id="comment" ref={input => { this.nama_jalan = input; }}></textarea>
                             </div>
                         </form>
@@ -146,7 +146,8 @@ class Address extends Component{
 }
 
 const mapStateToProps = (state) => {
-    return {user: state.auth,
-            address: state.auth.address}
+    return {
+        address: state.auth.address
+    }
   }
 export default connect(mapStateToProps, {onAddressAdd, getAddress, deleteAddress})(Address)

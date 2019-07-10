@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 // import axios from '../config/axios'
 
-import {getCartOnly} from '../actions/cart'
+import { getCartOnly } from '../actions/cart'
 
 import { connect } from "react-redux";
 import { onLogoutUser } from '../actions/users'
@@ -13,27 +13,16 @@ const cookie = new Cookies()
 
 class Header extends Component {
   state = {
-    cartOnly:[]
+    cartOnly: []
   }
 
-  getCartUser = async() => {
+  getCartUser = async () => {
     var user_id = cookie.get('idLogin')
     // const res= await axios.get(`/shop/cartOnly/${user_id}`)
-   await this.props.getCartOnly(user_id)
-   this.orderSummary()
+    await this.props.getCartOnly(user_id)
+    this.orderSummary()
     // await this.setState({cartOnly: res.data})
   }
-
-  // async componentWillUpdate (prevProps, prevState) {
-  //   // if(this.state.cartOnly.length !== prevState.length || this.state.cartOnly.length !== 0){
-  //   //   await this.getCartUser();
-  //   // }
-  //   console.log(prevProps);
-  //   console.log(prevState);
-  //   // console.log(prevState.length);
-  //   // console.log(this.state.cartOnly.length);
-    
-  // }
 
   orderSummary = () => {
     var newCart = this.props.cartuser
@@ -45,15 +34,13 @@ class Header extends Component {
   }
 
   componentDidMount = () => {
-      this.getCartUser()
+    this.getCartUser()
   }
 
   render() {
-    // console.log(this.state.cartOnly);
     // console.log(this.props.cartuser);
-    // console.log(this.props.cartnih);
-    
-    if (cookie.get('idLogin') !== undefined && cookie.get('roleLogin') === 'user') {
+
+    if (cookie.get('idLogin') && cookie.get('roleLogin') === 'user') {
       return (
         <div>
           <nav className="navbar navbar-expand-sm bg-info  navbar-dark fixed-top" id="main-nav">
@@ -81,7 +68,7 @@ class Header extends Component {
                         <Link to='/product/seafood' className="dropdown-item">SeaFood</Link>
                       </li>
                       <li className="dropdown-submenu">
-                        <Link to='/product/freshwater'className="dropdown-item">FreshWater</Link>
+                        <Link to='/product/freshwater' className="dropdown-item">FreshWater</Link>
                       </li>
                       <li className="dropdown-submenu">
                         <Link to="/product/all" className="dropdown-item">Shop All</Link>
@@ -136,7 +123,7 @@ class Header extends Component {
                     </a>
                     <ul className="dropdown-menu dropdownParent" aria-labelledby="navbarDropdownMenuLink">
                       <li className="dropdown-submenu ">
-                        <Link to="/manageproduct/list" className="dropdown-item text-dark">Manage Products</Link>
+                        <Link to="/manageproduct/list" className="dropdown-item text-dark">Admin Dashboard</Link>
                       </li>
                       <li className="dropdown-submenu">
                         {/* <Link to="/" className="dropdown-item text-dark"> */}
@@ -182,15 +169,15 @@ class Header extends Component {
                 </a>
                 <ul className="dropdown-menu dropdownParent" aria-labelledby="navbarDropdownMenuLink">
                   <div className="dropdown-header">Products</div>
-                    <li className="dropdown-submenu">
-                      <Link to='/product/seafood' className="dropdown-item">Seafood</Link>
-                    </li>
-                    <li className="dropdown-submenu">
-                      <Link to='/product/freshwater' className="dropdown-item">Freshwater</Link>
-                    </li>
-                    <li className="dropdown-submenu">
-                      <Link to="/product/all" className="dropdown-item">Shop All</Link>
-                    </li>
+                  <li className="dropdown-submenu">
+                    <Link to='/product/seafood' className="dropdown-item">Seafood</Link>
+                  </li>
+                  <li className="dropdown-submenu">
+                    <Link to='/product/freshwater' className="dropdown-item">Freshwater</Link>
+                  </li>
+                  <li className="dropdown-submenu">
+                    <Link to="/product/all" className="dropdown-item">Shop All</Link>
+                  </li>
                 </ul>
               </li>
               <li className="nav-item">
@@ -209,9 +196,10 @@ class Header extends Component {
 
 
 const mapStateToProps = (state) => {
-  return { user: state.auth.username,
-          cartuser: state.cart.cartOnly,
-          cartnih: state.cart.carts}
+  return {
+    user: state.auth.username,
+    cartuser: state.cart.cartOnly
+  }
 }
 
 export default connect(mapStateToProps, { onLogoutUser, getCartOnly })(Header)

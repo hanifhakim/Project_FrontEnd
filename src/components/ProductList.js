@@ -23,6 +23,7 @@ class ProductList extends Component {
     }
  
     addToCart = async(prod_id) => {
+      
         const user_id = cookie.get('idLogin')
         const product_id = prod_id
         const qty = parseInt(this.qty.value)
@@ -51,9 +52,10 @@ class ProductList extends Component {
         const product_id = prod_id
         const qty = this.qty.value
         const cls = 'Wishlist'
-        console.log(this.qty);
+        // console.log(this.qty);
         if(user_id){
             this.props.onAddToCart(user_id, product_id, qty, cls)
+            this.toggle()
         } else {
             await this.setState({ cek: !this.state.cek })
             return swal({
@@ -65,6 +67,7 @@ class ProductList extends Component {
     }
 
     render(){
+        //From Parent
         const item = this.props.item
         return (
             <div className="card col-3 border-0 m-0.5" style={{ width: "25rem" }}>
@@ -74,7 +77,9 @@ class ProductList extends Component {
                         onClick={() => { this.addToWishlist(item.id) }}>Add to Wishlist <i className="far fa-heart"></i></button></span>
                 </div>
                 <div className="card-body bodyProd">
-                    <Link to={`/detailproduct/${item.id}`} className='text-decoration-none text-dark'><h5>{item.name}</h5></Link>
+                    <Link to={`/detailproduct/${item.id}`} className='text-decoration-none text-dark'>
+                        <h5>{item.name}</h5>
+                    </Link>
                     <div className='item'>
                         <span className="price"><i className="fas fa-tag"></i> Rp. {item.price.toLocaleString()}</span>
                         <span className="pcs">Pieces: {item.pieces} Ekor</span>
@@ -82,6 +87,7 @@ class ProductList extends Component {
                     <div className='card-text row rowAdd'>
                         <span className='col-3 qty'>Qty </span>
                         <input className='col-3 tagInput'
+                            onKeyPress={(e)=>{e.preventDefault()}}
                             type="number" ref={input => { this.qty = input; }}
                             defaultValue={1} min='0'
                             max={item.stock}
@@ -92,7 +98,7 @@ class ProductList extends Component {
                         </button>
                         {this.state.cek === true ? <Redirect to ="/register"/>:null}
                         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-                            <ModalHeader toggle={this.toggle}>Cart</ModalHeader>
+                            <ModalHeader toggle={this.toggle}>Cart & Wishlist</ModalHeader>
                             <ModalBody>
                                 Item berhasil ditambahkan, ingin belanja lagi ?
                             </ModalBody>

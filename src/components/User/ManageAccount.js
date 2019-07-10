@@ -21,7 +21,7 @@ class ManageAccount extends Component{
         const path = this.props.match.url
     //    console.log(path);
        if(path === '/manageaccount/info'){
-           return <AccountInfo/>
+            return <AccountInfo/>
        } else if (path === '/manageaccount/address'){
             return <Address/>
        } else if (path === '/manageaccount/myorder'){
@@ -32,7 +32,7 @@ class ManageAccount extends Component{
     render(){
         // console.log(cookie.get('userLogin'));
         
-        if(cookie.get('idLogin') !== undefined || this.props.user !== ''){
+        if(cookie.get('idLogin') !== undefined){
             return(
                 <div>
                     <div className="container-fluid row mt-3"  style={{marginBottom:'300px'}}>
@@ -74,7 +74,5 @@ class ManageAccount extends Component{
 }
 
 
-const mapStateToProps = (state) => {
-    return {user: state.auth.username}
-  }
-export default connect(mapStateToProps, {getUsers})(ManageAccount)
+
+export default connect(null, {getUsers})(ManageAccount)

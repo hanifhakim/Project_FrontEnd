@@ -1,4 +1,3 @@
-
 .testimonial-group > .row {
   overflow-x: auto;
   white-space: nowrap;
@@ -11,10 +10,9 @@
 .productImageHome{
   max-height: 170px !important
 }
-.col-sm-3 {  font-size: 48px; padding-bottom: 20px; padding-top: 18px; }
+.col-sm-3 {  
+  font-size: 48px; padding-bottom: 20px; padding-top: 18px; 
+}
 .productHome{
   font-size: 15px
 }
-/* .col-sm-4:nth-child(3n+1) { background: #c69; }
-.col-sm-4:nth-child(3n+2) { background: #9c6; }
-.col-sm-4:nth-child(3n+3) { background: #69c; } */

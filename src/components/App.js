@@ -7,7 +7,6 @@ import Header from './Header'
 import Home from './Home';
 import Register from './User/Register';
 import { connect } from 'react-redux';
-// import Footer from './Footer';
 import Product from './Product';
 import Cart from './User/Cart';
 import ManageAccount from '../components/User/ManageAccount';
@@ -52,10 +51,6 @@ class App extends Component {
                                 <Route path="/payment/:selected" component={Payment} />
                                 <Route path="/detailproduct/:selected" component={DetailProduct} />
                                 <Route path="/howtobuy" component={HowToBuy} />
-                                {/* <Route path="/manageproduct/:selected" component ={AddProduct}/> */}
-                            </div>
-                            <div style={{position: 'sticky'}}>
-                                {/* <Footer /> */}
                             </div>
                     </div>
                 </BrowserRouter>
@@ -67,15 +62,11 @@ class App extends Component {
                     <Header/>
                     <Route path="/" exact component ={Home}/>
                     <Route path="/register" component ={Register}/>
-                    <Route path="/product/:category" component ={Product}/>
                     <Route path="/cart" component ={Cart}/>
                     <Route path="/checkout" component ={Checkout}/>
                     <Route path="/manageproduct/:list" component ={ManageProduct}/>
                     <Route path="/editproduct/:selected" component ={EditProduct}/>
                     <Route path="/payment/:selected" component ={Payment}/>
-                    <Route path="/detailproduct/:selected" component ={DetailProduct}/>
-                    {/* <Route path="/manageproduct/:selected" component ={AddProduct}/> */}
-                    {/* <Footer/> */}
                 </div>
                 </BrowserRouter>
             )

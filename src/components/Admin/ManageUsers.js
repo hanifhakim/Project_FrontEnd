@@ -10,19 +10,37 @@ class ManageUsers extends Component {
     }
 
     deleteUser = async (user_id) => {
-
-        const confirm = window.confirm('Mau hapus?')
         
-        if(confirm){
-            await axios.delete(`/users/${user_id}`)
-            swal({
-                title: "Delete Succedeed!",
-                text: "You clicked the button!",
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this imaginary file!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+          })
+         .then( async (willDelete) => {
+            if (willDelete) {
+              await axios.delete(`/users/${user_id}`)
+              swal("Poof! Your imaginary file has been deleted!", {
                 icon: "success",
-                button: "Ok!",
-                });
-            this.getAllUsers()
-        }
+              });
+              this.getAllUsers()
+            } else {
+              return swal("Your imaginary file is safe!");
+            }
+          });
+        // const confirm = window.confirm('Mau hapus?')
+        
+        // if(confirm){
+        //     await axios.delete(`/users/${user_id}`)
+        //     swal({
+        //         title: "Delete Succedeed!",
+        //         text: "You clicked the button!",
+        //         icon: "success",
+        //         button: "Ok!",
+        //         });
+        //     this.getAllUsers()
+        // }
        
     }
     
@@ -45,7 +63,7 @@ class ManageUsers extends Component {
 
     sortList = async () => {
         var fnsort = document.getElementById('manageSort').value
-        console.log(fnsort);
+        // console.log(fnsort);
         if(fnsort === 'Username'){                
             const res = await axios.get(`/sortusername`)
             this.setState({users: res.data})
@@ -70,6 +88,7 @@ class ManageUsers extends Component {
     }
 
     renderList = () => {
+        // console.log('dari renderlist');
         return this.state.users.map((item, i)=>{
             return (
                 <tr className='text-center' key={item.id}>
@@ -106,7 +125,7 @@ class ManageUsers extends Component {
                 <div className=' d-inline'>
                     <div className="form-group ">
                         <select className="form-control bg-light text-black " id="manageSort" onChange={this.sortList}>
-                            <option>Sort</option>
+                            <option>Sort By</option>
                             <option>Username</option>
                             <option>First Name</option>
                             <option>Last Name</option>

@@ -14,7 +14,9 @@ class ManageOrders extends Component {
     state = {
         orders:[],
         orderDetails:[],
-        modal: false
+        modal: false,
+        nestedModal: false,
+        closeAll: false
     }
 
     confirmPayment = async (order_id) => {
@@ -28,7 +30,7 @@ class ManageOrders extends Component {
         this.getOrder()
     }
 
-    confirmShipment = async (order_id, product_id) => {
+    confirmShipment = async (order_id) => {
         await axios.patch(`/confirmshipment/${order_id}`)
         
         const res = await axios.get(`/getorderdetails/${order_id}`)
@@ -38,7 +40,7 @@ class ManageOrders extends Component {
         for(let i=0; i<data.length; i++){
             var qtyOrder = data[i].order_quantity
             var prod_id = data[i].product_id
-            // dapetin stock awal
+            // dapetin stock awal sesuai product_id
             const res2 = await axios.get(`/getstock/${prod_id}`)
             var qtyOld = res2.data[0].stock
             
@@ -74,7 +76,22 @@ class ManageOrders extends Component {
         this.setState({
           modal: !this.state.modal
         });
-      }
+    }
+
+    toggleNested = () => {
+        this.setState({
+            nestedModal: !this.state.nestedModal,
+            closeAll: false
+        });
+    }
+
+    toggleAll = () => {
+        this.setState({
+            modal: !this.state.modal,
+            nestedModal: !this.state.nestedModal,
+            closeAll: true
+        });
+    }
 
     detailOrders = async (order_id, user_id) => {
         this.toggle()
@@ -92,6 +109,7 @@ class ManageOrders extends Component {
     }
 
     renderList = () => {
+        const item2 = this.state.orderDetails[0]
         return this.state.orders.map((item, i) => {
             return (
                 <tr className='text-center text-capitalize' key={Math.random()}>
@@ -105,7 +123,7 @@ class ManageOrders extends Component {
                                 {item.shipment_methods}
                             </div>
                             Price: Rp. {item.shipment_price.toLocaleString()}
-                            <button onClick={() => { this.confirmShipment(item.id, item.product_id) }}
+                            <button onClick={() => { this.confirmShipment(item.id) }}
                                 className='mt-2 btn bg-none' style={{ color: 'red' }}>Is Deliver
                             </button>
                         </div>
@@ -128,7 +146,7 @@ class ManageOrders extends Component {
                             className='btn btn-success m-2 btn-sm'>Detail Orders
                         </button>
                         <Modal isOpen={this.state.modal} toggle={this.toggle} className='modal-lg' >
-                            <ModalHeader toggle={this.toggle}>Modal title</ModalHeader>
+                            <ModalHeader toggle={this.toggle}>Detail Orders</ModalHeader>
                             <ModalBody>
                                 <table className="table table-hover mb-5">
                                     <thead>
@@ -147,6 +165,31 @@ class ManageOrders extends Component {
                                         {this.orderDetailsList()}
                                     </tbody>
                                 </table>
+                                <Button color="info" onClick={this.toggleNested}>Shipping Address</Button>
+                                {this.state.orderDetails.length > 0 ? (
+                                    <Modal isOpen={this.state.nestedModal} toggle={this.toggleNested} onClosed={this.state.closeAll ? this.toggle : undefined}>
+                                    <ModalHeader>Your Address</ModalHeader>
+                                    <ModalBody>
+                                        <div className="card mx-auto my-3 border-dark">
+                                            <div className="card-body text-center">
+                                                <p className="card-text lead">
+                                                    <strong>Nama Penerima: {item2.nama_depan} {item2.nama_belakang}</strong>
+                                                </p>
+                                                <div className="card-text lead">
+                                                    <div>Alamat: {item2.nama_jalan}</div>
+                                                    <div>Kec. {item2.kecamatan}, Kab/Kot. {item2.kabupaten_kota}</div>
+                                                    <div>{item2.provinsi}, {item2.kodepos}</div>
+                                                    Telepon:{item2.telepon}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ModalBody>
+                                    <ModalFooter>
+                                        <Button color="primary" onClick={this.toggleNested}>Done</Button>{' '}
+                                        <Button color="secondary" onClick={this.toggleAll}>All Done</Button>
+                                    </ModalFooter>
+                                </Modal>
+                                ): undefined}
                             </ModalBody>
                             <ModalFooter>
                                 <Button color="primary" onClick={this.toggle}>Ok</Button>{' '}
@@ -195,7 +238,7 @@ class ManageOrders extends Component {
                 <div className=' d-inline'>
                     <div className="form-group ">
                         <select className="form-control bg-light text-black " id="manageSort" onChange={this.sortList}>
-                            <option>Sort</option>
+                            <option>Sort By</option>
                             <option>Status</option>
                             <option>Payment Image</option>
                             <option>Shipment</option>

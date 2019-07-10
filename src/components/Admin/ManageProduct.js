@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Link, Redirect } from "react-router-dom";
 import Cookies from 'universal-cookie'
-import { connect } from "react-redux";
 import AddProduct from './AddProduct';
 import ManageListProduct from './ManageListProduct';
 import ManageOrders from './ManageOrders';
@@ -22,14 +21,13 @@ class ManageProduct extends Component{
            } else if (path === '/manageproduct/list'){
                 return <ManageListProduct/>
            } else if (path === '/manageproduct/manageorders'){
-            return <ManageOrders/>
+                return <ManageOrders/>
            } else if (path === '/manageproduct/manageusers'){
-            return <ManageUsers/>
+                return <ManageUsers/>
            }
         }
 
     render(){
-        // console.log(this.props.user);
         if(cookie.get('roleLogin') === 'admin'){
             return (
                 <div>
@@ -75,10 +73,6 @@ class ManageProduct extends Component{
 }
 
 
-const mapStateToProps = (state) => {
-    return {
-        user: state.auth.user
-    }
-}
 
-export default connect(mapStateToProps) (ManageProduct)
+
+export default ManageProduct

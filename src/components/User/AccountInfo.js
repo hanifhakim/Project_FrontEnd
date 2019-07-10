@@ -13,6 +13,7 @@ class AccountInfo extends Component{
        defaultAva: require("../../img/user.svg"),
        imagePreview:''
     }
+
     onButtonEdit = async() => {
         const first_name = this.first_name.value
         const last_name = this.last_name.value
@@ -24,7 +25,7 @@ class AccountInfo extends Component{
     }
 
     onDeleteAva = async(id) => {
-        // this.avatar.value = null
+        this.avatar.value = null
         await this.props.onDeleteAvatar(id)
         await this.setState({
             imagePreview:''
@@ -44,12 +45,13 @@ class AccountInfo extends Component{
             })
         }
     }
+    
     componentDidMount = async () => {
        await this.getUser()
     }
     
     imageChange = (event) => {
-        event.preventDefault()
+        // event.preventDefault()
         const imagePreview = URL.createObjectURL(event.target.files[0])
         // console.log(imagePreview);
 
@@ -64,7 +66,7 @@ class AccountInfo extends Component{
             var {first_name, last_name, email, id} = this.props.edit[0]
         }
         
-        console.log(this.state.imagePreview);
+        // console.log(this.state.imagePreview);
         
         return(
             <div className="container">
@@ -98,20 +100,20 @@ class AccountInfo extends Component{
                     <div className="form-group">
                         <label>First Name</label>
                         <input ref={input => this.first_name = input} type="text" 
-                            className="form-control" id="name" defaultValue={first_name}/>
+                            className="form-control" defaultValue={first_name}/>
                     </div>
                     <div className="form-group">
                         <label >Last Name</label>
-                        <input ref={input => this.last_name = input} type="text" className="form-control" id="name" defaultValue={last_name}/>
+                        <input ref={input => this.last_name = input} type="text" className="form-control" defaultValue={last_name}/>
                     </div>
                     <div className="form-group">
                         <label >Email address</label>
-                        <input ref={input => this.email = input} type="email" className="form-control" id="email" defaultValue={email}/>
+                        <input ref={input => this.email = input} type="email" className="form-control" defaultValue={email}/>
                         <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
                     </div>
                     <div className="form-group">
                         <label>Password</label>
-                        <input ref={input => this.password = input} type="password" className="form-control" id="password" />
+                        <input ref={input => this.password = input} type="password" className="form-control"/>
                     </div>
                 <button type="submit" className="btn btn-primary" onClick={this.onButtonEdit}>Submit</button>
             </div>

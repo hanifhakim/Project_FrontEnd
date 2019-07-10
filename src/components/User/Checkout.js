@@ -49,21 +49,20 @@ class Checkout extends Component {
         var one_item = this.state.oneItemBuy
         var shipment_address_id = this.state.address
         var shipment_price = this.state.shipmentCost
-        // var myOrder = []
-        const {cartOnly} = this.state
+        var {cartOnly} = this.state
 
-        //POST Order
-        const res = await axios.post(`/order/${id}`)
+        //POST tabel Order
+        var res = await axios.post(`/order/${id}`)
         var order_id = res.data.insertId
         if(order_id !== 0){
             for(let i =0; i<cartOnly.length; i++){
-                const qty = cartOnly[i].qty
-                const oneItem = one_item[i]
-                //POST ORDER DETAILS
-                await axios.post(`/orderdetails/${cartOnly[i].id}`, {qty, order_id, oneItem})
-                // var res = res.data
-                // var newOrder = myOrder.concat(res.data)
+                var qty = cartOnly[i].qty
+                var oneItem = one_item[i]
+                var product_id = cartOnly[i].id
+                //POST ORDER DETAILS (prod_id)
+                await axios.post(`/orderdetails/${product_id}`, {qty, order_id, oneItem})
             }
+
             //POST SHIPMENT
             await axios.post(`/ordershipment`, {shipment_methods, shipment_address_id, shipment_price, order_id })
             //POST PAYMENT
@@ -74,7 +73,8 @@ class Checkout extends Component {
             
             //DELETE di CART
             for(let i =0; i<cartOnly.length; i++){
-                await axios.delete(`/cart/delete/${id}/${cartOnly[i].id}`)
+                var productId = cartOnly[i].id
+                await axios.delete(`/cart/delete/${id}/${productId}`)
             }
               swal({
                 title: "Orders Succedeed!",
@@ -105,7 +105,7 @@ class Checkout extends Component {
             oneItemBuy = oneItemBuy.concat(newCart[i].qty*newCart[i].price)
             totalBuy += newCart[i].qty*newCart[i].price
         }
-        // console.log(oneItemBuy);
+        console.log(oneItemBuy);
         if(this.state.shipmentCost !== 0){
             return this.setState({amount: totalBuy + parseInt(this.state.shipmentCost), oneItemBuy: oneItemBuy})
         }
@@ -196,7 +196,7 @@ class Checkout extends Component {
         var cartCookie = cookie.get('cartUser')
         var user_id = cookie.get('idLogin')
 
-        if(cartCookie !== undefined && user_id !== undefined){
+        if(cartCookie && user_id){
             return(
                 <div>
                     <div className='container'>
@@ -206,7 +206,7 @@ class Checkout extends Component {
                                 {this.renderAddress()}
                                 <div className='d-flex justify-content-end'>
                                     <Link to={'/manageaccount/address'} >
-                                        <button onClick={this.createAddress} className='btn btn-primary my-4'>Manage Address</button>
+                                        <button className='btn btn-primary my-4'>Manage Address</button>
                                     </Link>
                                 </div>
                             </div>
@@ -214,13 +214,14 @@ class Checkout extends Component {
                                 <h5>
                                     <span className='border-bottom border-dark'>Your Cart</span>
                                 </h5>
-                                <div className=''>
+                                <div>
                                     {this.renderCart()}
                                 </div>
                                 <div style={{marginTop: '50px'}}>
                                     <h5>
                                         <span className='border-bottom border-dark m-2'>Shipment:</span> 
-                                        Rp. {this.state.shipmentCost.toLocaleString()}<span className='ml-3'><strong>{this.state.shipment}</strong></span>
+                                        Rp. {this.state.shipmentCost.toLocaleString()}
+                                        <span className='ml-3'><strong>{this.state.shipment}</strong></span>
                                     </h5>
                                 </div>
                                 <div style={{marginTop: '50px'}}>
@@ -236,7 +237,8 @@ class Checkout extends Component {
                                         <DropdownToggle caret color='bg-white'>
                                             <span style={{fontWeight:'bold'}}>
                                                 {this.state.shipment === 'GO-SEND' ? <span>GO-SEND</span> :
-                                                this.state.shipment === 'nakamikan' ? <span>nakamikan</span> : <span>Shipment Method</span> }
+                                                this.state.shipment === 'nakamikan' ? <span>nakamikan</span> : 
+                                                <span>Shipment Method</span> }
                                             </span>
                                         </DropdownToggle>
                                     </span>
@@ -277,7 +279,9 @@ class Checkout extends Component {
 }
 
 const mapStateToProps = (state) => {
-    return {address: state.auth.address}
+    return {
+        address: state.auth.address
+    }
   }
 
 export default connect(mapStateToProps, { getCartOnly,getAddress })(Checkout)

@@ -18,21 +18,26 @@ class Cart extends Component{
     }
 
     onDeleteHandler = async (product_id) => {
-
-        const confirm = window.confirm('Mau hapus?')
-
-        if(confirm){
-            var user_id = cookie.get('idLogin')
-            await this.props.deleteCart(user_id, product_id)
-            swal({
-                title: "Delete Succedeed!",
-                text: "You clicked the button!",
+        const user_id = cookie.get('idLogin')
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this imaginary file!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+          })
+         .then( async (willDelete) => {
+            if (willDelete) {
+                await this.props.deleteCart(user_id, product_id)
+              swal("Poof! Your imaginary file has been deleted!", {
                 icon: "success",
-                button: "Ok!",
-                });
-            this.wishList()
-            this.onlyCart()
-        }
+              });
+                this.wishList()
+                this.onlyCart()
+            } else {
+              return swal("Your imaginary file is safe!");
+            }
+          });
     }
 
     onChangeToWishlist = async (product_id) => {
@@ -82,23 +87,23 @@ class Cart extends Component{
             })
     }
 
-    componentDidMount = () => {
-       this.wishList()
-       this.onlyCart()
-    }
-
-    //gak ke state, langsung redux
-    onlyCart = async () => {
-        var user_id = cookie.get('idLogin')
-        this.props.getCartOnly(user_id)       
-    }
-
     //setState dulu
     wishList = async () => {
         var user_id = cookie.get('idLogin')
         const res = await axios.get(`/shop/wishlist/${user_id}`)
         // console.log(res.data);
         return this.setState({wishlist: res.data})
+    }
+
+    //gak ke state, langsung redux
+    onlyCart = async () => {
+        var user_id = cookie.get('idLogin')
+        this.props.getCartOnly(user_id)
+    }
+
+    componentDidMount = () => {
+       this.wishList()
+       this.onlyCart()
     }
 
     renderCart = () => {
@@ -228,7 +233,6 @@ class Cart extends Component{
         // console.log(this.props.cartOnly);
         var a = cookie.get('cartUser')
         console.log(a);
-        
         return(
             <div>
                 <div className='container'>

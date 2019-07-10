@@ -4,8 +4,7 @@ tr > td > .w2 {
 
     width: 300px;
     height: 300px;
-    background-color: rgb(226, 226, 226) 
-  
+    background-color: rgb(226, 226, 226)
 }
 
 /* Manage Orders */
@@ -17,11 +16,3 @@ tr > td > a > .w2 {
     background-color: rgb(226, 226, 226) 
   
 }
-
-/* .paymentImg {
-
-} */
-/* tr > td > .w2 {
-    max-width: 100px !important;
-    background-color: aqua !important 
-} */

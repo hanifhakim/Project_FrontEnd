@@ -1,15 +1,14 @@
 ul > .sidebarAccount{
     /* border: none !important; */
     color: black ;
-    /* background-color: antiquewhite; */
+    border-bottom: 1px;
     text-decoration: none ;
     font-weight: 100;
 }
 
+
 .sidebarAccountUser {
     border-bottom: 1px;
-    /* border-collapse: collapse; */
-    /* border-style: dashed; */
 }
 
 div > div > div > ul > li > .list {

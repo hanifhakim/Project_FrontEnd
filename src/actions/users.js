@@ -12,6 +12,8 @@ export const onRegistClick = (username, first_name, last_name, email, password) 
       try {
       const res  = await  axios.post('/users', {
           username, first_name, last_name, email, password})  
+          console.log(res);
+          
           
           if(res.data.affectedRows) {
             return swal({
@@ -20,24 +22,35 @@ export const onRegistClick = (username, first_name, last_name, email, password) 
               icon: "success",
               button: "Ok!",
             });
-          }
-          else if(res.data.sqlMessage.includes('user')){
+          } else if (res.data === 'error password'){
+            return swal({
+              title: `${res.data}`,
+              text: "Password can not be null",
+              icon: "error"
+            });
+          } else if(res.data.sqlMessage.includes('user')){
             // console.log(res.data.sqlMessage);
             return swal({
-              title: "Username has been taken",
-              text: "Please kindly try another username",
+              title: `${res.data.sqlMessage}`,
+              text: "Please kindly check your username input",
               icon: "error"
             });
           } else if (res.data.sqlMessage.includes('mail')) {
             return swal({
-              title: "Email has been registered",
+              title: `${res.data.sqlMessage}`,
               text: "Please kindly try another email",
               icon: "error"
             });
           }
-        //  return console.log(res.data);
-          
+          return swal({
+            title: `${res.data.sqlMessage}`,
+            text: "Please kindly check your input",
+            icon: "error"
+          });
+         
       } catch (e) {
+        console.log(e);
+        
         return swal({
           title: "Email input is not valid",
           text: "Please kindly try another email",
@@ -184,13 +197,14 @@ export const keepLogin = (id, username, role) => {
           payload: res
       })
       } catch (e) {
+        console.log(e);
         
       }
     }
   }
 
   export const onDeleteAvatar = (user_id) => {
-    return async dispatch => {
+    return async () => {
       try {
           await axios.delete(`/users/deleteAva/${user_id}`)
           // cookie.remove('avaLogin' , {path:'/'})
@@ -200,6 +214,7 @@ export const keepLogin = (id, username, role) => {
       // })
           
       } catch (e) {
+        console.log(e);
         
       }
     }

@@ -1,6 +1,6 @@
 tr > td > .w {
-    max-width: 100px !important;
-    background-color: aqua !important 
+    max-width: 100px ;
+    background-color: aqua  
 }
 .productListImage {
     object-fit: cover;

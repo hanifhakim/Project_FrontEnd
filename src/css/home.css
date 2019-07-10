@@ -2,6 +2,7 @@ div .gambarJumbo {
     max-width: 100%;
     border-radius: 5px
 }
+
 .jumbotron{
     /* margin-top: 50px; */
     height: 450px;
@@ -9,9 +10,9 @@ div .gambarJumbo {
     background-position-x: center;
     background-size: 100%;
 }
+
 .jumbotron h1, .jumbotron p{
     color: aliceblue;
-   
 }
 
 h1, h2, h3, h4, h5, h6 {

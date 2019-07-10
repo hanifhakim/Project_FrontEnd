@@ -30,43 +30,51 @@ class EditProduct extends Component {
     }
     
     imageChange = (event) => {
-        event.preventDefault()
+        // event.preventDefault()
         const imagePreview = URL.createObjectURL(event.target.files[0])
         // console.log(imagePreview);
         this.setState({imagePreview: imagePreview})
     }
 
-    checkEdit = () => {
-        // console.log(this.props.match.params.selected);
-        var arrNew = this.props.editProduct.filter((item)=>{
-            return item.id === parseInt(this.props.match.params.selected)
-        }) 
+    // checkEdit = () => {
+    //     // console.log(this.props.match.params.selected);
+    //     var arrNew = this.props.editProduct.filter((item)=>{
+    //         return item.id === parseInt(this.props.match.params.selected)
+    //     }) 
 
-        return this.setState({
-            productSelected: arrNew,
-            radio: arrNew[0].category
-        })
-    }
+    //     return this.setState({
+    //         productSelected: arrNew,
+    //         radio: arrNew[0].category
+    //     })
+    // }
 
     manageProducts = async () => {
+        //send to redux
         await this.props.getManageProducts()
-       
+        
+        //filtering sesuai params yg dikirim
         var arrNew = this.props.editProduct.filter((item)=>{
             return item.id === parseInt(this.props.match.params.selected)
         }) 
 
+        //set preview img
         const image = arrNew[0].image
+        const radio = arrNew[0].category
         if(image){
             await this.setState({
                 imagePreview:`http://localhost:2010/manageproduct/list/${image}`
             })
         }
+        await this.setState({
+            productSelected: arrNew,
+            radio: radio
+        })
 
     }
 
     componentDidMount = async () => {
         await this.manageProducts()
-        this.checkEdit()
+        // this.checkEdit()
     }
 
     render() {
@@ -109,55 +117,55 @@ class EditProduct extends Component {
                                 <form>
                                     <h1 className='text-center'>Edit Product</h1>
                                     <div className="form-group row">
-                                        <div className="col-3">
+                                        <div className="col-3 editProdInput">
                                             <label>Product Name</label>
                                         </div>
-                                        <div className="col-9">
+                                        <div className="col-9 editProdInput">
                                         <input type="text" ref={input => { this.name = input; }}
                                             defaultValue={name}
                                             className="form-control" placeholder="type your text" 
                                         />
                                         </div>
-                                        <div className="col-3">
+                                        <div className="col-3 editProdInput">
                                             <label>Product Price</label>
                                         </div>
-                                        <div className="col-9">
+                                        <div className="col-9 editProdInput">
                                             <input type="number" ref={input => { this.price = input; }}
                                                 defaultValue={price}
                                                 className="form-control" placeholder="type your text" 
                                             />
                                         </div>
-                                        <div className="col-3">
+                                        <div className="col-3 editProdInput">
                                             <label>Product Stock</label>
                                         </div>
-                                        <div className="col-9">
+                                        <div className="col-9 editProdInput">
                                             <input type="number" ref={input => { this.stock = input; }}
                                                 defaultValue={stock}
                                                 className="form-control" placeholder="type your text" 
                                             />
                                         </div>
-                                        <div className="col-3">
+                                        <div className="col-3 editProdInput">
                                             <label>Pieces per kg</label>
                                         </div>
-                                        <div className="col-9">
+                                        <div className="col-9 editProdInput">
                                             <input type="text" ref={input => { this.pieces = input; }}
                                                 defaultValue={pieces}
                                                 className="form-control" placeholder="type your text" 
                                             />
                                         </div>
-                                        <div className="col-3">
+                                        <div className="col-3 editProdInput">
                                              <label>Product Description</label>
                                         </div>
-                                        <div className="col-9">
+                                        <div className="col-9 editProdInput">
                                             <input type="Text" rows="5" ref={input => { this.description = input; }}
                                                 defaultValue={description}
                                                 className="form-control" placeholder="type your text" 
                                             />
                                         </div>
-                                        <div className="radio col-3">
+                                        <div className="radio col-3 editProdInput">
                                              <label>Select Category</label>
                                         </div>
-                                        <div className="col-9">
+                                        <div className="col-9 editProdInput">
                                             <label className="radio-inline mx-2">
                                                 <input onClick={() => { this.setState({ radio: 'seafood' }) }}
                                                     type="radio" name="optradio"
@@ -169,20 +177,20 @@ class EditProduct extends Component {
                                                 />Freshwater
                                             </label>
                                         </div>
-                                        <div className="col-3">
+                                        <div className="col-3 editProdInput">
                                              <label>Current Image</label>
                                         </div>
-                                        <div className="col-9">
+                                        <div className="col-9 editProdInput">
                                              <img className='w-50' 
                                                 src={this.state.imagePreview.length !== 0 ? 
                                                     this.state.imagePreview 
                                                     :null} alt="img">
                                              </img>
                                         </div>
-                                        <div className="custom-file col-3">
+                                        <div className="custom-file col-3 editProdInput">
                                              <label>Update Image</label>
                                         </div>
-                                        <div className="col-9">
+                                        <div className="col-9 editProdInput">
                                             <label className="btn btn-outline-dark m-0">
                                                 <input multiple="multiple" 
                                                     ref={input => this.image = input} type="file" className="d-none" 

@@ -57,6 +57,7 @@ class Payment extends Component {
         
         formData.append('payment_img', payment_img)
         const order_id = this.props.match.params.selected
+        //Post Img
         const res = await axios.patch(`/orderpayment/${order_id}`, formData,  {headers:{
             'Content-Type': 'multipart/form-data'
             }
@@ -80,10 +81,10 @@ class Payment extends Component {
     }
 
     imageChange = (event) => {
-        event.preventDefault()
+        // event.preventDefault()
 
         const imagePreview = URL.createObjectURL(event.target.files[0])
-        console.log(imagePreview);
+        // console.log(imagePreview);
         this.setState({previewImg: imagePreview})
     }
     
@@ -91,7 +92,7 @@ class Payment extends Component {
         // console.log(this.state.amount);
         var user_id = cookie.get('idLogin')
         
-            if(user_id !== undefined){
+            if(user_id){
                 return(
                     <div>
                         <div className="container-fluid row mt-3">
@@ -133,7 +134,7 @@ class Payment extends Component {
                                 </div>
                                 <div className='col-3 offset-1'>
                                     <div>
-                                        <a href={this.state.previewImg.length === null  ? 
+                                        <a href={this.state.previewImg.length === 0  ? 
                                                 null: this.state.previewImg }>
                                             <img style={{ width:'100%', maxHeight:'320px' }} 
                                                 onChange={this.imageChange} 

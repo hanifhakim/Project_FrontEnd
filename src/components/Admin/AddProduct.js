@@ -39,39 +39,39 @@ class AddProduct extends Component {
                     <form>
                         <h1 className='text-center'>Add Product</h1>
                         <div className="form-group">
-                            <div className="">
-                                <p>Product Name</p>
+                            <div>
+                                <p className='addProdInput'>Product Name</p>
                                 <input type="text" ref={input => { this.name = input; }}
                                     className="form-control inputAdd" placeholder="type your text" 
                                 />
                             </div>
-                            <div className="">
-                                <p>Product Price</p>
+                            <div>
+                                <p className='addProdInput'>Product Price</p>
                                 <input type="number" ref={input => { this.price = input; }}
                                     className="form-control inputAdd" placeholder="type your text" 
                                 />
                             </div>
-                            <div className="">
-                                <p>Product Stock</p>
+                            <div>
+                                <p className='addProdInput'>Product Stock</p>
                                 <input type="number" ref={input => { this.stock = input; }}
                                     className="form-control inputAdd" placeholder="type your text" 
                                 />
                             </div>
-                            <div className="">
-                                <p>Pieces per kg</p>
+                            <div>
+                                <p className='addProdInput'>Pieces per kg</p>
                                 <input type="text" ref={input => { this.pieces = input; }}
                                     className="form-control inputAdd" placeholder="type your text" 
                                 />
                             </div>
                         </div>
                         <div className="form-group">
-                            <p>Product Description</p>
+                            <p className='addProdInput'>Product Description</p>
                             <textarea className="form-control inputAdd" rows="5" 
                                 id="comment" ref={input => { this.description = input; }}>                            
                             </textarea>
                         </div>
                         <div className="radio form-group">
-                            <p>Select Category</p>
+                            <p className='addProdInput'>Select Category</p>
                             <label className="radio-inline mx-2">
                                 <input onClick={() => { this.setState({ radio: 'seafood' }) }}
                                 type="radio" name="optradio" />Seafood
